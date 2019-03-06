@@ -50,8 +50,13 @@ public class User extends BaseEntityAudit {
     @Column(name = "last_activation_date")
     private Date lastActivationDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
 

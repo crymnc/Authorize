@@ -1,17 +1,39 @@
 package com.anatoliapark.nursinghome.model;
 
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
-import com.anatoliapark.nursinghome.model.base.User;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name="user_role")
+@Table(name="role")
 public class Role extends BaseEntityAudit {
 
     @Column(name="name")
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "role_permission",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "privilege_id", referencedColumnName = "id"))
+    private Collection<Privilege> privileges;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Collection<Privilege> getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(Collection<Privilege> privileges) {
+        this.privileges = privileges;
+    }
 }

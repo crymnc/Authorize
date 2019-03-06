@@ -1,40 +1,22 @@
-package com.anatoliapark.nursinghome.model;
+package com.anatoliapark.nursinghome.model.usertypes;
 
+import com.anatoliapark.nursinghome.model.GuestHealthSituation;
+import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
-
-public class Guest {
+@Entity
+@Table(name="guest")
+public class Guest extends BaseEntityAudit {
 
     @Column(name = "birth_date")
     private Date birthDate;
 
     @Column(name = "birth_place")
     private String birthPlace;
-
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JoinTable(name = "guest_disease", joinColumns = @JoinColumn(name = "disease_id"))
-    private Collection<String> diseases;
-
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JoinTable(name = "guest_surgery", joinColumns = @JoinColumn(name = "surgery_id"))
-    private Collection<String> pastSurgicalOperations;
-
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JoinTable(name = "guest_alergie", joinColumns = @JoinColumn(name = "alergie_id"))
-    private Collection<String> alergies;
 
     @Column(name = "description")
     @Length(max = 300)
@@ -51,6 +33,15 @@ public class Guest {
     @JoinTable(name = "blood_type", joinColumns = @JoinColumn(name = "blood_type_id"))
     private String bloodType;
 
+    @ManyToMany
+    @JoinTable(
+            name = "guest_situation",
+            joinColumns = @JoinColumn(
+                    name = "guest_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "situation_id", referencedColumnName = "id"))
+    private Collection<GuestHealthSituation> healthSituations;
+
 
     public Date getBirthDate() {
         return birthDate;
@@ -66,30 +57,6 @@ public class Guest {
 
     public void setBirthPlace(String birthPlace) {
         this.birthPlace = birthPlace;
-    }
-
-    public Collection<String> getDiseases() {
-        return diseases;
-    }
-
-    public void setDiseases(Collection<String> diseases) {
-        this.diseases = diseases;
-    }
-
-    public Collection<String> getPastSurgicalOperations() {
-        return pastSurgicalOperations;
-    }
-
-    public void setPastSurgicalOperations(Collection<String> pastSurgicalOperations) {
-        this.pastSurgicalOperations = pastSurgicalOperations;
-    }
-
-    public Collection<String> getAlergies() {
-        return alergies;
-    }
-
-    public void setAlergies(Collection<String> alergies) {
-        this.alergies = alergies;
     }
 
     public String getDescription() {

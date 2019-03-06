@@ -12,8 +12,24 @@ import javax.persistence.Table;
 public class UserEmail extends BaseEntityAudit {
 
     @Column(name="user_id")
-    private Long user_id;
+    private Long userId;
 
     @Column(name="email")
     private String email;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

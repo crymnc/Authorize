@@ -11,8 +11,24 @@ import javax.persistence.Table;
 public class UserPhone extends BaseEntityAudit {
 
     @Column(name="user_id")
-    private Long user_id;
+    private Long userId;
 
     @Column(name="phone")
     private String phone;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

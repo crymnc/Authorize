@@ -1,27 +1,28 @@
-package com.anatoliapark.nursinghome.model;
+package com.anatoliapark.nursinghome.model.usertypes;
 
+import com.anatoliapark.nursinghome.model.UserAddress;
+import com.anatoliapark.nursinghome.model.UserEmail;
+import com.anatoliapark.nursinghome.model.UserPhone;
 import com.anatoliapark.nursinghome.model.base.User;
-import org.hibernate.validator.constraints.NotEmpty;
-
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
 
 @Entity
-@Table(name = "doctor")
-public class Doctor extends User {
+@Table(name = "client")
+public class Client extends User {
 
     @OneToMany(
             orphanRemoval = true
     )
     @JoinColumn(name="user_id", referencedColumnName="id")
-    @NotEmpty(message="{user.phone.NotEmpty}")
     private Collection<UserPhone> phones;
 
-    @OneToMany
+    @OneToMany(
+            orphanRemoval = true
+    )
     @JoinColumn(name="user_id", referencedColumnName="id")
-    @NotEmpty(message="{user.email.NotEmpty}")
     private Collection<UserEmail> emails;
 
     @OneToMany(
@@ -30,14 +31,10 @@ public class Doctor extends User {
     @JoinColumn(name="user_id", referencedColumnName="id")
     private Collection<UserAddress> addresses;
 
-    @Column(name = "birth_date")
-    private Date birthDate;
+    @Column(name = "affinity")
+    @Length(max = 30)
+    private String affinity;
 
-    @Column(name = "education")
-    private String education;
-
-    @Column(name = "expertise")
-    private String expertise;
 
     public Collection<UserPhone> getPhones() {
         return phones;
@@ -63,27 +60,11 @@ public class Doctor extends User {
         this.addresses = addresses;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public String getAffinity() {
+        return affinity;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
-    public String getExpertise() {
-        return expertise;
-    }
-
-    public void setExpertise(String expertise) {
-        this.expertise = expertise;
+    public void setAffinity(String affinity) {
+        this.affinity = affinity;
     }
 }
