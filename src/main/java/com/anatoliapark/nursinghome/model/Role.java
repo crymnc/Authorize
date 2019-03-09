@@ -1,6 +1,8 @@
 package com.anatoliapark.nursinghome.model;
 
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,6 +12,8 @@ import java.util.Collection;
 public class Role extends BaseEntityAudit {
 
     @Column(name="name")
+    @NotEmpty(message = "{user.role.NotEmpty}")
+    @Length(max = 20,message = "{user.role.Length}")
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)

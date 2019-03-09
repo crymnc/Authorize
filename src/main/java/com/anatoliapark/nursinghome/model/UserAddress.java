@@ -2,6 +2,7 @@ package com.anatoliapark.nursinghome.model;
 
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
 import com.anatoliapark.nursinghome.model.base.User;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,11 @@ import javax.persistence.Table;
 public class UserAddress extends BaseEntityAudit {
 
     @Column(name="user_id")
+    @NotEmpty
     private Long userId;
 
     @Column(name="address")
+    @NotEmpty(message = "{user.address.NotEmpty}")
     private String address;
 
     public Long getUserId() {

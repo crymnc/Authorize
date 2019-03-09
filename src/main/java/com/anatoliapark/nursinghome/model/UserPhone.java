@@ -2,6 +2,8 @@ package com.anatoliapark.nursinghome.model;
 
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
 import com.anatoliapark.nursinghome.model.base.User;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +15,12 @@ import javax.persistence.Table;
 public class UserPhone extends BaseEntityAudit {
 
     @Column(name="user_id")
+    @NotEmpty
     private Long userId;
 
     @Column(name="phone")
+    @NotEmpty
+    @Length(max = 11,message = "{user.phone.Length}")
     private String phone;
 
     public Long getUserId() {
