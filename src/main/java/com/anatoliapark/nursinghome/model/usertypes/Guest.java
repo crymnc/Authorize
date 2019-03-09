@@ -2,6 +2,7 @@ package com.anatoliapark.nursinghome.model.usertypes;
 
 import com.anatoliapark.nursinghome.model.GuestHealthSituation;
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
+import com.anatoliapark.nursinghome.model.base.User;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name="guest")
-public class Guest extends BaseEntityAudit {
+public class Guest extends User {
 
     @Column(name = "birth_date")
     private Date birthDate;
@@ -41,6 +42,9 @@ public class Guest extends BaseEntityAudit {
             inverseJoinColumns = @JoinColumn(
                     name = "situation_id", referencedColumnName = "id"))
     private Collection<GuestHealthSituation> healthSituations;
+
+    @ManyToMany(mappedBy = "guests")
+    private Collection<Client> clients;
 
 
     public Date getBirthDate() {
@@ -89,5 +93,21 @@ public class Guest extends BaseEntityAudit {
 
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
+    }
+
+    public Collection<GuestHealthSituation> getHealthSituations() {
+        return healthSituations;
+    }
+
+    public void setHealthSituations(Collection<GuestHealthSituation> healthSituations) {
+        this.healthSituations = healthSituations;
+    }
+
+    public Collection<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Collection<Client> clients) {
+        this.clients = clients;
     }
 }

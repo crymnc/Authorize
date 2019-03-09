@@ -30,45 +30,33 @@ public class BaseEntityAudit extends BaseEntity {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Long getCreatedBy() {
         return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
     }
 
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public Long getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
 
     @PrePersist
-    public void setCreationParameters() {
-        User user = (User) authentication.getPrincipal();
-        this.createdBy = user.getId();
+    private void setCreationParameters() {
+        //User user = (User) authentication.getPrincipal();
+        this.createdBy = 1L;
         this.createdAt = new Date();
+
+        this.updatedBy = 1L;
+        this.updatedAt = new Date();
     }
 
     @PreUpdate
-    public void setUpdateParameters() {
-        User user = (User) authentication.getPrincipal();
-        this.updatedBy = user.getId();
+    private void setUpdateParameters() {
+        //User user = (User) authentication.getPrincipal();
+        this.updatedBy = 1L;
         this.updatedAt = new Date();
     }
 }

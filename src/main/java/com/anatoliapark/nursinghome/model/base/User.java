@@ -12,8 +12,8 @@ import static javax.persistence.InheritanceType.JOINED;
 
 
 @Entity
-@Inheritance(strategy=JOINED)
-@Table(name="USER")
+@Inheritance(strategy = JOINED)
+@Table(name = "USER")
 public class User extends BaseEntityAudit {
 
 
@@ -41,22 +41,23 @@ public class User extends BaseEntityAudit {
 
     @Column(name = "password")
     @NotEmpty(message = "{user.password.NotEmpty}")
-    @Length(min = 5, max = 30, message = "{user.password.Length}")
+    @Length(min = 5, max = 60, message = "{user.password.Length}")
     private String password;
 
     @Column(name = "active", nullable = false)
-    private int active = 1;
+    private boolean active = true;
 
     @Column(name = "last_activation_date")
     private Date lastActivationDate;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
+    @NotEmpty
     private Collection<Role> roles;
 
 
@@ -108,11 +109,11 @@ public class User extends BaseEntityAudit {
         this.password = password;
     }
 
-    public int getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

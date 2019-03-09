@@ -1,11 +1,10 @@
 package com.anatoliapark.nursinghome.model;
 
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
+import com.anatoliapark.nursinghome.model.base.User;
 import com.fasterxml.jackson.databind.ser.Serializers;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="user_email")

@@ -12,9 +12,9 @@ public class Role extends BaseEntityAudit {
     @Column(name="name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "role_permission",
+            name = "role_privilege",
             joinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(

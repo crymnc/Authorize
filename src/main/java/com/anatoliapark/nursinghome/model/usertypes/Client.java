@@ -14,27 +14,38 @@ import java.util.Collection;
 public class Client extends User {
 
     @OneToMany(
-            orphanRemoval = true
+            orphanRemoval = true,
+            cascade=CascadeType.ALL
     )
-    @JoinColumn(name="user_id", referencedColumnName="id")
+    @JoinColumn(name="user_id", referencedColumnName="id",foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Collection<UserPhone> phones;
 
     @OneToMany(
-            orphanRemoval = true
+            orphanRemoval = true,
+            cascade=CascadeType.ALL
     )
-    @JoinColumn(name="user_id", referencedColumnName="id")
+    @JoinColumn(name="user_id", referencedColumnName="id",foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Collection<UserEmail> emails;
 
     @OneToMany(
-            orphanRemoval = true
+            orphanRemoval = true,
+            cascade=CascadeType.ALL
     )
-    @JoinColumn(name="user_id", referencedColumnName="id")
+    @JoinColumn(name="user_id", referencedColumnName="id",foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Collection<UserAddress> addresses;
 
     @Column(name = "affinity")
     @Length(max = 30)
     private String affinity;
 
+    @ManyToMany
+    @JoinTable(
+            name = "client_guest",
+            joinColumns = @JoinColumn(
+                    name = "client_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "guest_id", referencedColumnName = "id"))
+    private Collection<Guest> guests;
 
     public Collection<UserPhone> getPhones() {
         return phones;
@@ -66,5 +77,13 @@ public class Client extends User {
 
     public void setAffinity(String affinity) {
         this.affinity = affinity;
+    }
+
+    public Collection<Guest> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(Collection<Guest> guests) {
+        this.guests = guests;
     }
 }

@@ -16,21 +16,24 @@ import java.util.Date;
 public class Attendant extends User {
 
     @OneToMany(
-            orphanRemoval = true
+            orphanRemoval = true,
+            cascade=CascadeType.ALL
     )
-    @JoinColumn(name="user_id", referencedColumnName="id")
-    @NotEmpty(message="{user.phone.NotEmpty}")
+    @JoinColumn(name="user_id", referencedColumnName="id",foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Collection<UserPhone> phones;
 
-    @OneToMany
-    @JoinColumn(name="user_id", referencedColumnName="id")
-    @NotEmpty(message="{user.email.NotEmpty}")
+    @OneToMany(
+            orphanRemoval = true,
+            cascade=CascadeType.ALL
+    )
+    @JoinColumn(name="user_id", referencedColumnName="id",foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Collection<UserEmail> emails;
 
     @OneToMany(
-            orphanRemoval = true
+            orphanRemoval = true,
+            cascade=CascadeType.ALL
     )
-    @JoinColumn(name="user_id", referencedColumnName="id")
+    @JoinColumn(name="user_id", referencedColumnName="id",foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Collection<UserAddress> addresses;
 
     @Column(name = "birth_date")
