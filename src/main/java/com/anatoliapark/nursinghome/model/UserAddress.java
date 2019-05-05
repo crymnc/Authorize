@@ -14,7 +14,6 @@ import javax.persistence.Table;
 public class UserAddress extends BaseEntityAudit {
 
     @Column(name="user_id")
-    @NotEmpty
     private Long userId;
 
     @Column(name="address")

@@ -10,6 +10,7 @@ import com.anatoliapark.nursinghome.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,6 +28,7 @@ public class NursingHomeApplicationTest {
 
 
 
+
     @Test
     public void createUserWithRoleAndPrivilege(){
         Client client = createClient();
@@ -34,56 +36,6 @@ public class NursingHomeApplicationTest {
         createAffinityBetweenUsers(client,guest);
     }
 
-    public Attendant createAttendant(){
-        Attendant attendant=new Attendant();
-        attendant.setName("Can");
-        attendant.setLastName("Şahintaş");
-        attendant.setActive(true);
-        attendant.setIdentifierNumber("44335061152");
-        attendant.setUsername("crymnc");
-        attendant.setPassword("a2m8z7mta");
-        attendant.setRegistrationDate(new Date());
-        attendant.setEducation("Doktor");
-
-
-        Collection<Privilege> privileges = new ArrayList<>();
-        Privilege privilegeRead=new Privilege();
-        privilegeRead.setName("READ");
-        privilegeRead.setDescription("Read Privilige");
-        privileges.add(privilegeRead);
-
-        Privilege privilegeWrite=new Privilege();
-        privilegeRead.setName("WRITE");
-        privilegeRead.setDescription("Write Privilige");
-        privileges.add(privilegeWrite);
-
-        Collection<Role> roles = new ArrayList<>();
-        Role role = new Role();
-        role.setName("ROLE_DOCTOR");
-        role.setPrivileges(privileges);
-        roles.add(role);
-        attendant.setRoles(roles);
-
-        Collection<UserAddress> addresses = new ArrayList<>();
-        UserAddress address=new UserAddress();
-        address.setAddress("İstanbul");
-        addresses.add(address);
-        attendant.setAddresses(addresses);
-
-        Collection<UserPhone> phones = new ArrayList<>();
-        UserPhone phone = new UserPhone();
-        phone.setPhone("5319684944");
-        phones.add(phone);
-        attendant.setPhones(phones);
-
-        Collection<UserEmail> emails=new ArrayList<>();
-        UserEmail email = new UserEmail();
-        email.setEmail("can.sahintas2324@gmail.com");
-        emails.add(email);
-        attendant.setEmails(emails);
-
-        return (Attendant)userService.registerNewUser(attendant);
-    }
 
     public Client createClient(){
         Client client=new Client();
@@ -91,7 +43,7 @@ public class NursingHomeApplicationTest {
         client.setLastName("Şahintaş");
         client.setActive(true);
         client.setIdentifierNumber("11223344556");
-        client.setUsername("servgi");
+        client.setUsername("sevgi");
         client.setPassword("a2m8z7mta");
         client.setRegistrationDate(new Date());
         client.setAffinity("Anne");

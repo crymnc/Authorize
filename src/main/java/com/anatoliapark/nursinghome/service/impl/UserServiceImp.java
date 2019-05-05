@@ -2,7 +2,6 @@ package com.anatoliapark.nursinghome.service.impl;
 
 import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
 import com.anatoliapark.nursinghome.model.base.User;
-import com.anatoliapark.nursinghome.model.usertypes.Attendant;
 import com.anatoliapark.nursinghome.repository.PrivilegeRepository;
 import com.anatoliapark.nursinghome.repository.RoleRepository;
 import com.anatoliapark.nursinghome.repository.UserRepository;

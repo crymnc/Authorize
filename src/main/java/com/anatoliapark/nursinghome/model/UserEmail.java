@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class UserEmail extends BaseEntityAudit {
 
     @Column(name="user_id")
-    @NotEmpty
     private Long userId;
 
     @Column(name="email")
