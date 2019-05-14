@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.equalTo;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(
-        locations = "classpath:application-test.properties")
+        locations = "/application-test.properties")
 public class PrivilegeRepositoryTest {
 
     @Autowired

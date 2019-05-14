@@ -50,7 +50,7 @@ public class User extends BaseEntityAudit {
     @Column(name = "last_activation_date")
     private Date lastActivationDate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.REMOVE,CascadeType.DETACH})
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(
