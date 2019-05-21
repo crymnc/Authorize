@@ -17,7 +17,7 @@ public class Role extends BaseEntityAudit {
     @Length(max = 20, message = "{user.role.Length}")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "role_privilege",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},

@@ -3,6 +3,7 @@ package com.anatoliapark.nursinghome.test;
 import com.anatoliapark.nursinghome.model.*;
 import com.anatoliapark.nursinghome.model.usertypes.Attendant;
 import com.anatoliapark.nursinghome.repository.PrivilegeRepository;
+import com.anatoliapark.nursinghome.repository.RoleRepository;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,9 @@ public class UserRepositoryTest {
     PrivilegeRepository privilegeRepository;
 
     @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
     UserService userService;
 
     @Before
@@ -51,6 +55,14 @@ public class UserRepositoryTest {
         privileges.add(privilegeWrite);
 
         privilegeRepository.save(privileges);
+        privilegeRepository.flush();
+
+        Role roleDoctor = new Role();
+        roleDoctor.setName("ROLE_DOCTOR");
+        roleDoctor.setPrivileges(privileges);
+
+        roleRepository.save(roleDoctor);
+        roleRepository.flush();
 
     }
 
@@ -66,21 +78,9 @@ public class UserRepositoryTest {
         attendant.setRegistrationDate(new Date());
         attendant.setEducation("Doktor");
 
-
-        Collection<Privilege> privileges = new ArrayList<>();
-        Privilege privilegeRead = privilegeRepository.findByName("READ");
-        privileges.add(privilegeRead);
-
-        Privilege privilegeWrite = new Privilege();
-        privilegeWrite.setName("WRITE");
-        privilegeWrite.setDescription("Write Privilige");
-        privileges.add(privilegeWrite);
-
         Collection<Role> roles = new ArrayList<>();
-        Role role = new Role();
-        role.setName("ROLE_DOCTOR");
-        role.setPrivileges(privileges);
-        roles.add(role);
+        Role roleDoctor = roleRepository.findByName("ROLE_DOCTOR");
+        roles.add(roleDoctor);
         attendant.setRoles(roles);
 
         Collection<UserAddress> addresses = new ArrayList<>();
