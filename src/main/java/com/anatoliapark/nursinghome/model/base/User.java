@@ -1,12 +1,14 @@
 package com.anatoliapark.nursinghome.model.base;
 
 import com.anatoliapark.nursinghome.model.Role;
+import com.anatoliapark.nursinghome.model.Value;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import static javax.persistence.InheritanceType.JOINED;
 
@@ -58,6 +60,9 @@ public class User extends BaseEntityAudit {
     )
     @NotEmpty
     private Collection<Role> roles;
+
+    @OneToMany(mappedBy = "userId")
+    private HashSet<Value> values;
 
     public String getName() {
         return name;
