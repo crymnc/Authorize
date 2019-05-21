@@ -6,7 +6,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Collection;
 
 @Entity
 @Table(name="privilege")
@@ -19,6 +21,9 @@ public class Privilege extends BaseEntityAudit {
 
     @Column(name="description")
     private String description;
+
+    @ManyToMany(mappedBy = "privileges")
+    private Collection<Role> roles;
 
     public String getName() {
         return name;
@@ -34,5 +39,13 @@ public class Privilege extends BaseEntityAudit {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }
