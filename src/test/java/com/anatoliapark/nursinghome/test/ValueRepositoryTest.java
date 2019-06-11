@@ -1,9 +1,9 @@
 package com.anatoliapark.nursinghome.test;
 
 import com.anatoliapark.nursinghome.model.Value;
-import com.anatoliapark.nursinghome.model.Variable;
+import com.anatoliapark.nursinghome.model.Type;
 import com.anatoliapark.nursinghome.repository.ValueRepository;
-import com.anatoliapark.nursinghome.repository.VariableRepository;
+import com.anatoliapark.nursinghome.repository.TypeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,23 +23,23 @@ public class ValueRepositoryTest {
     ValueRepository valueRepository;
 
     @Autowired
-    VariableRepository variableRepository;
+    TypeRepository variableRepository;
 
     @Test
-    public void test(){
-        Variable var=new Variable();
+    public void test() {
+        Type var = new Type();
         var.setName("Integer");
-        var.setType(Integer.class.getName());
+        var.setType(Integer.class);
 
         variableRepository.save(var);
 
-        Value val=new Value();
+        Value<Integer> val = new Value();
         val.setUserId(1L);
-        val.setVariable(variableRepository.findOne(1L));
+        val.setType(variableRepository.findOne(1L));
         val.setValue("2");
 
         valueRepository.save(val);
-        Value value=valueRepository.findOne(1L);
+        Value value = valueRepository.findOne(1L);
 
 
         Object o = value.getValue();

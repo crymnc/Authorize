@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="VARIABLE")
-public class Variable extends BaseEntityAudit {
+@Table(name="TYPE")
+public class Type extends BaseEntityAudit {
 
     @Column(name="name")
     private String name;
@@ -24,11 +24,11 @@ public class Variable extends BaseEntityAudit {
         this.name = name;
     }
 
-    public Class getType() throws ClassNotFoundException{
+    public Class<?> getType() throws ClassNotFoundException{
         return Class.forName(type);
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(Class clazz) {
+        this.type = clazz.getName();
     }
 }

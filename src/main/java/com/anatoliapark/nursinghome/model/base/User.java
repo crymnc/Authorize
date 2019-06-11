@@ -62,7 +62,7 @@ public class User extends BaseEntityAudit {
     private Collection<Role> roles;
 
     @OneToMany(mappedBy = "userId")
-    private HashSet<Value> values;
+    private Collection<Value> values;
 
     public String getName() {
         return name;
