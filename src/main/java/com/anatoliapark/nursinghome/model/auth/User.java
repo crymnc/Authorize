@@ -1,23 +1,21 @@
-package com.anatoliapark.nursinghome.model.base;
+package com.anatoliapark.nursinghome.model.auth;
 
-import com.anatoliapark.nursinghome.model.Role;
-import com.anatoliapark.nursinghome.model.Value;
+import com.anatoliapark.nursinghome.model.UserComponentContent;
+import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 
 import static javax.persistence.InheritanceType.JOINED;
 
 
 @Entity
 @Inheritance(strategy = JOINED)
-@Table(name = "USER")
+@Table(name = "user")
 public class User extends BaseEntityAudit {
-
 
     @Column(name = "name")
     @NotEmpty(message = "{user.name.NotEmpty}")
@@ -26,15 +24,6 @@ public class User extends BaseEntityAudit {
     @Column(name = "last_name")
     @NotEmpty(message = "{user.lastname.NotEmpty}")
     private String lastName;
-
-    @Column(name = "identifier_number", nullable = false, unique = true)
-    @Length(min = 11, max = 11, message = "{user.identifiernumber.Length}")
-    @NotEmpty(message = "{user.identifiernumber.NotEmpty}")
-    private String identifierNumber;
-
-    @Column(name = "registration_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date registrationDate;
 
     @Column(name = "username")
     @NotEmpty(message = "{user.username.NotEmpty}")
@@ -54,15 +43,19 @@ public class User extends BaseEntityAudit {
 
     @ManyToMany
     @JoinTable(
-            name = "user_role",
+            name = "user_usertype",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+            inverseJoinColumns = {@JoinColumn(name = "type_id", referencedColumnName = "id")}
     )
     @NotEmpty
-    private Collection<Role> roles;
+    private Collection<UserType> userTypes;
 
-    @OneToMany(mappedBy = "userId")
-    private Collection<Value> values;
+    @OneToMany(
+            mappedBy = "user",
+            orphanRemoval = true,
+            cascade=CascadeType.ALL
+    )
+    private Collection<UserComponentContent> userComponentContents;
 
     public String getName() {
         return name;
@@ -78,22 +71,6 @@ public class User extends BaseEntityAudit {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getIdentifierNumber() {
-        return identifierNumber;
-    }
-
-    public void setIdentifierNumber(String identifierNumber) {
-        this.identifierNumber = identifierNumber;
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
     }
 
     public String getUsername() {
@@ -112,7 +89,7 @@ public class User extends BaseEntityAudit {
         this.password = password;
     }
 
-    public boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 
@@ -128,11 +105,19 @@ public class User extends BaseEntityAudit {
         this.lastActivationDate = lastActivationDate;
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
+    public Collection<UserType> getUserTypes() {
+        return userTypes;
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public void setUserTypes(Collection<UserType> userTypes) {
+        this.userTypes = userTypes;
+    }
+
+    public Collection<UserComponentContent> getUserComponentContents() {
+        return userComponentContents;
+    }
+
+    public void setUserComponentContents(Collection<UserComponentContent> userComponentContents) {
+        this.userComponentContents = userComponentContents;
     }
 }

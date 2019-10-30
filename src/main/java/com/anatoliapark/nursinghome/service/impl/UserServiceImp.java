@@ -1,9 +1,7 @@
 package com.anatoliapark.nursinghome.service.impl;
 
 import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
-import com.anatoliapark.nursinghome.model.base.User;
-import com.anatoliapark.nursinghome.repository.PrivilegeRepository;
-import com.anatoliapark.nursinghome.repository.RoleRepository;
+import com.anatoliapark.nursinghome.model.auth.User;
 import com.anatoliapark.nursinghome.repository.UserRepository;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +13,6 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PrivilegeRepository privilegeRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

@@ -2,6 +2,7 @@ package com.anatoliapark.nursinghome.model.base;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @MappedSuperclass
 public class BaseEntity implements Serializable {
@@ -14,11 +15,19 @@ public class BaseEntity implements Serializable {
     @Column(name = "id", nullable = false)
     protected Long id;
 
+    @Column(name="discontinue_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date discontinueDate;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) { this.id = id; }
+
+    public Date getDiscontinueDate(){return discontinueDate;}
+
+    public void setDiscontinueDate(Date discontinueDate){this.discontinueDate=discontinueDate;}
 
     @Override
     public int hashCode() {
