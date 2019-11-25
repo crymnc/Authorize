@@ -15,10 +15,10 @@ public class ConstantRepositoryImpl implements ConstantRepository {
     private EntityManager entityManager;
 
     @Override
-    public BaseConstantEntity findByName(String name,Class clazz) {
+    public <T extends BaseConstantEntity> T findByName(String name, Class<T> clazz) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<BaseConstantEntity> query = cb.createQuery(clazz);
-        Root<BaseConstantEntity> root = query.from(clazz);
+        CriteriaQuery<T> query = cb.createQuery(clazz);
+        Root<T> root = query.from(clazz);
 
         Path<String> namePath = root.get("name");
         Predicate predicate = cb.equal(namePath, name);

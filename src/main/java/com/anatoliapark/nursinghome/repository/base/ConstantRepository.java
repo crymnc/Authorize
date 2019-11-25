@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface ConstantRepository {
-    BaseConstantEntity findByName(String name, Class clazz);
+    <T extends BaseConstantEntity> T findByName(String name, Class<T> clazz);
 }
