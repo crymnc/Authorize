@@ -1,6 +1,6 @@
 package com.anatoliapark.nursinghome.model;
 
-import com.anatoliapark.nursinghome.model.auth.UserType;
+import com.anatoliapark.nursinghome.model.auth.Role;
 import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
 
 import javax.persistence.*;
@@ -11,7 +11,7 @@ import java.util.Collection;
 public class UserComponent extends BaseConstantEntity {
 
     @ManyToMany(mappedBy = "userComponents", fetch = FetchType.LAZY)
-    private Collection<UserType> userTypes;
+    private Collection<Role> roles;
 
     @OneToMany(
             mappedBy = "component",
@@ -20,12 +20,12 @@ public class UserComponent extends BaseConstantEntity {
     )
     private Collection<UserComponentContent> userComponentContents;
 
-    public Collection<UserType> getUserTypes() {
-        return userTypes;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setUserTypes(Collection<UserType> userTypes) {
-        this.userTypes = userTypes;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     public Collection<UserComponentContent> getUserComponentContents() {

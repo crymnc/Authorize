@@ -30,7 +30,4 @@ public class Authority extends BaseConstantEntity {
         return authorityGroups;
     }
 
-    public void setAuthorityGroups(Collection<AuthorityGroup> authorityGroups) {
-        this.authorityGroups = authorityGroups;
-    }
 }

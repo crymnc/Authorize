@@ -9,11 +9,8 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
 
-import static javax.persistence.InheritanceType.JOINED;
-
 
 @Entity
-@Inheritance(strategy = JOINED)
 @Table(name = "user")
 public class User extends BaseEntityAudit {
 
@@ -43,12 +40,12 @@ public class User extends BaseEntityAudit {
 
     @ManyToMany
     @JoinTable(
-            name = "user_usertype",
+            name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "type_id", referencedColumnName = "id")}
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     @NotEmpty
-    private Collection<UserType> userTypes;
+    private Collection<Role> roles;
 
     @OneToMany(
             mappedBy = "user",
@@ -105,19 +102,15 @@ public class User extends BaseEntityAudit {
         this.lastActivationDate = lastActivationDate;
     }
 
-    public Collection<UserType> getUserTypes() {
-        return userTypes;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setUserTypes(Collection<UserType> userTypes) {
-        this.userTypes = userTypes;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     public Collection<UserComponentContent> getUserComponentContents() {
         return userComponentContents;
-    }
-
-    public void setUserComponentContents(Collection<UserComponentContent> userComponentContents) {
-        this.userComponentContents = userComponentContents;
     }
 }

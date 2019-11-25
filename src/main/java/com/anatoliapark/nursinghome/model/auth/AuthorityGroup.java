@@ -18,7 +18,7 @@ public class AuthorityGroup extends BaseConstantEntity {
     private Collection<Authority> authorities;
 
     @ManyToMany(mappedBy = "authorityGroups", fetch = FetchType.LAZY)
-    private Collection<UserType> userTypes;
+    private Collection<Role> roles;
 
     public Collection<Authority> getAuthorities() {
         return authorities;
@@ -28,11 +28,8 @@ public class AuthorityGroup extends BaseConstantEntity {
         this.authorities = authorities;
     }
 
-    public Collection<UserType> getUserTypes() {
-        return userTypes;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setUserTypes(Collection<UserType> userTypes) {
-        this.userTypes = userTypes;
-    }
 }

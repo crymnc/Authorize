@@ -10,24 +10,24 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "user_type")
-public class UserType extends BaseConstantEntity {
+@Table(name = "role")
+public class Role extends BaseConstantEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "usertype_authoritygroup",
-            joinColumns = {@JoinColumn(name = "type_id", referencedColumnName = "id")},
+            name = "role_authoritygroup",
+            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_group_id", referencedColumnName = "id")}
     )
     private Collection<AuthorityGroup> authorityGroups;
 
-    @ManyToMany(mappedBy = "userTypes", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Collection<User> users;
 
     @ManyToMany
     @JoinTable(
-            name = "usertype_component",
-            joinColumns = {@JoinColumn(name = "type_id", referencedColumnName = "id")},
+            name = "role_component",
+            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "component_id", referencedColumnName = "id")}
     )
     private Collection<UserComponent> userComponents;
@@ -42,10 +42,6 @@ public class UserType extends BaseConstantEntity {
 
     public Collection<User> getUsers() {
         return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
     }
 
     public Collection<UserComponent> getUserComponents() {
