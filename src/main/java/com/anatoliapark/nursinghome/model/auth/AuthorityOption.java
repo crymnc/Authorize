@@ -6,8 +6,7 @@ import com.anatoliapark.nursinghome.model.webpage.WebPageComponent;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "authority_option")
+@Entity(name = "authority_option")
 public class AuthorityOption extends BaseEntityAudit {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

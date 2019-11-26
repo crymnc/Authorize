@@ -4,8 +4,7 @@ import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
-@Table(name="authority")
+@Entity(name="authority")
 public class Authority extends BaseConstantEntity {
 
     @OneToMany(

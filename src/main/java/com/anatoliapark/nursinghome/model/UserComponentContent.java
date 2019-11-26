@@ -5,8 +5,7 @@ import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "user_component_content")
+@Entity(name = "user_component_content")
 public class UserComponentContent extends BaseEntityAudit {
 
     @ManyToOne(cascade = CascadeType.ALL)

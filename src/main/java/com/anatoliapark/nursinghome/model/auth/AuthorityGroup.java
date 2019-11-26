@@ -5,8 +5,7 @@ import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
-@Table(name="authority_group")
+@Entity(name="authority_group")
 public class AuthorityGroup extends BaseConstantEntity {
 
     @ManyToMany

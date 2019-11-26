@@ -9,8 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
-@Table(name = "role")
+@Entity(name = "role")
 public class Role extends BaseConstantEntity {
 
     @ManyToMany

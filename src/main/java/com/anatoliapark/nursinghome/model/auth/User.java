@@ -10,8 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 
 
-@Entity
-@Table(name = "user")
+@Entity(name = "user")
 public class User extends BaseEntityAudit {
 
     @Column(name = "name")

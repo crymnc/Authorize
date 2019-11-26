@@ -6,8 +6,7 @@ import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
-@Table(name = "user_component")
+@Entity(name = "user_component")
 public class UserComponent extends BaseConstantEntity {
 
     @ManyToMany(mappedBy = "userComponents", fetch = FetchType.LAZY)
