@@ -18,6 +18,7 @@ public class BaseConstantEntity extends BaseEntityAudit{
     @Length(max = 255, message = "{constantEntity.desc.Length}")
     private String dsc;
 
+
     public String getName() {
         return name;
     }

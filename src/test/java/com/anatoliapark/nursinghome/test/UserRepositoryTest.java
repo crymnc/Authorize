@@ -3,12 +3,10 @@ package com.anatoliapark.nursinghome.test;
 import com.anatoliapark.nursinghome.NursingHomeApplication;
 import com.anatoliapark.nursinghome.model.auth.AuthorityGroup;
 import com.anatoliapark.nursinghome.model.auth.Role;
-import com.anatoliapark.nursinghome.repository.base.ConstantRepository;
+import com.anatoliapark.nursinghome.repository.constant.impl.ConstantRepositoryImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,7 +18,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class UserRepositoryTest {
 
     @Autowired
-    ConstantRepository constantRepository;
+    ConstantRepositoryImpl constantRepository;
 
     @Test
     public void whenFindByName_returnConstantEntity(){

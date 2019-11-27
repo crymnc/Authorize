@@ -1,7 +1,7 @@
 package com.anatoliapark.nursinghome.controller.rest;
 
 import com.anatoliapark.nursinghome.model.auth.User;
-import com.anatoliapark.nursinghome.service.UserService;
+import com.anatoliapark.nursinghome.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserRegistrationController {
 
     @Autowired
-    private UserService userService;
+    private AuthenticationService userService;
 
 
     @PostMapping("/register")
