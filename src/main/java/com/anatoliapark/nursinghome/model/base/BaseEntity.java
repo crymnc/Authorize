@@ -57,4 +57,8 @@ public class BaseEntity implements Serializable {
     public String toString() {
         return this.getClass().getName() + " [ID=" + id + "]";
     }
+
+    public Boolean isNew(){
+        return getId() == null;
+    }
 }

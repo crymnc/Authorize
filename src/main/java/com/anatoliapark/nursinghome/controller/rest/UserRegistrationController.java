@@ -21,6 +21,6 @@ public class UserRegistrationController {
         user.setUsername("crymnc");
         user.setPassword("a2m8z7mta");
 
-        userService.registerNewUser(user);
+
     }
 }

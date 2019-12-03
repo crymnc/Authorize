@@ -10,7 +10,7 @@ public class Authority extends BaseConstantEntity {
     @OneToMany(
             mappedBy = "authority",
             orphanRemoval = true,
-            cascade=CascadeType.ALL
+            cascade=CascadeType.REMOVE
     )
     private Collection<AuthorityOption> authorityOptions;
 

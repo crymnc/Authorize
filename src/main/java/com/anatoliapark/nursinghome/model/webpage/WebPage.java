@@ -16,14 +16,14 @@ public class WebPage extends BaseConstantEntity {
     @OneToMany(
             mappedBy = "webPage",
             orphanRemoval = true,
-            cascade=CascadeType.ALL
+            cascade=CascadeType.REMOVE
     )
     private Collection<WebPageComponent> webPageComponents;
 
     @OneToMany(
             mappedBy = "webPage",
             orphanRemoval = true,
-            cascade=CascadeType.ALL
+            cascade=CascadeType.REMOVE
     )
     private Collection<AuthorityOption> authorityOptions;
 

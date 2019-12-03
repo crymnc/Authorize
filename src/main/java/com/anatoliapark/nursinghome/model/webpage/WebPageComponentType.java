@@ -12,7 +12,7 @@ public class WebPageComponentType extends BaseConstantEntity {
     @OneToMany(
             mappedBy = "componentType",
             orphanRemoval = true,
-            cascade=CascadeType.ALL,
+            cascade=CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
     private Collection<WebPageComponent> webPageComponents;

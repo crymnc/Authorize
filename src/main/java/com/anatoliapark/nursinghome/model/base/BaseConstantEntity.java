@@ -34,8 +34,4 @@ public class BaseConstantEntity extends BaseEntityAudit{
     public void setDsc(String dsc) {
         this.dsc = dsc;
     }
-
-    public Boolean isNew(){
-        return getId() == null;
-    }
 }

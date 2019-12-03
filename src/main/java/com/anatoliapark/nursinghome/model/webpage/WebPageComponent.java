@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Table(name="webpage_component")
 public class WebPageComponent extends BaseConstantEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "page_id", referencedColumnName = "id")
     private WebPage webPage;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "component_type_id", referencedColumnName = "id")
     private WebPageComponentType componentType;
 

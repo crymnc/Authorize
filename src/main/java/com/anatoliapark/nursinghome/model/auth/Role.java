@@ -12,7 +12,7 @@ import java.util.Collection;
 @Entity(name = "role")
 public class Role extends BaseConstantEntity {
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE})
     @JoinTable(
             name = "role_authoritygroup",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
@@ -23,7 +23,7 @@ public class Role extends BaseConstantEntity {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Collection<User> users;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
     @JoinTable(
             name = "role_component",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},

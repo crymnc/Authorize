@@ -8,7 +8,7 @@ import java.util.Collection;
 @Entity(name="authority_group")
 public class AuthorityGroup extends BaseConstantEntity {
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE})
     @JoinTable(
             name = "authoritygroup_authority",
             joinColumns = {@JoinColumn(name = "authority_group_id", referencedColumnName = "id")},

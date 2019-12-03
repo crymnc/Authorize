@@ -3,8 +3,8 @@ package com.anatoliapark.nursinghome.test;
 import com.anatoliapark.nursinghome.NursingHomeApplication;
 import com.anatoliapark.nursinghome.model.auth.AuthorityGroup;
 import com.anatoliapark.nursinghome.model.auth.Role;
-import com.anatoliapark.nursinghome.repository.constant.impl.ConstantRepositoryImpl;
-import org.junit.*;
+import com.anatoliapark.nursinghome.repository.ConstantRepository;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,10 +15,10 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {NursingHomeApplication.class})
-public class UserRepositoryTest {
+public class EntityRepositoryTest {
 
     @Autowired
-    ConstantRepositoryImpl constantRepository;
+    ConstantRepository constantRepository;
 
     @Test
     public void whenFindByName_returnConstantEntity(){

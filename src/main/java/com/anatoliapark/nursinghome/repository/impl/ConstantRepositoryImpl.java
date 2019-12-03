@@ -1,11 +1,12 @@
-package com.anatoliapark.nursinghome.repository.constant.impl;
+package com.anatoliapark.nursinghome.repository.impl;
 
 import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
-import com.anatoliapark.nursinghome.repository.constant.ConstantRepository;
+import com.anatoliapark.nursinghome.repository.ConstantRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 import java.util.List;

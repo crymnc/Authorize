@@ -1,10 +1,7 @@
-package com.anatoliapark.nursinghome.repository.constant;
+package com.anatoliapark.nursinghome.repository;
 
 import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
-import com.anatoliapark.nursinghome.repository.constant.impl.ConstantRepositoryImpl;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.transaction.annotation.Transactional;
+import com.anatoliapark.nursinghome.repository.impl.ConstantRepositoryImpl;
 
 import java.util.List;
 

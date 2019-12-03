@@ -37,7 +37,7 @@ public class User extends BaseEntityAudit {
     @Column(name = "last_activation_date")
     private Date lastActivationDate;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE})
     @JoinTable(
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -49,7 +49,7 @@ public class User extends BaseEntityAudit {
     @OneToMany(
             mappedBy = "user",
             orphanRemoval = true,
-            cascade=CascadeType.ALL
+            cascade=CascadeType.REMOVE
     )
     private Collection<UserComponentContent> userComponentContents;
 

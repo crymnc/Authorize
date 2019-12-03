@@ -9,15 +9,15 @@ import javax.persistence.*;
 @Entity(name = "authority_option")
 public class AuthorityOption extends BaseEntityAudit {
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH} )
     @JoinColumn(name = "authority_id", referencedColumnName = "id")
     private Authority authority;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH} )
     @JoinColumn(name = "component_id", referencedColumnName = "id")
     private WebPageComponent component;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH} )
     @JoinColumn(name = "page_id", referencedColumnName = "id")
     private WebPage webPage;
 
