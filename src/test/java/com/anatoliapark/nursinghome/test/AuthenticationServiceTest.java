@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -100,6 +102,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void updateUser(){
+        createNewUser();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username","crymnc");
         List<User> userList = entityRepository.findBy(parameters,User.class);

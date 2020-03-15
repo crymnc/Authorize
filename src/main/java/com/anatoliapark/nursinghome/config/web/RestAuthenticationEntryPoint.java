@@ -1,4 +1,4 @@
-package com.anatoliapark.nursinghome.config.security.web;
+package com.anatoliapark.nursinghome.config.web;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -20,7 +20,7 @@ public final class RestAuthenticationEntryPoint implements AuthenticationEntryPo
         final HttpServletResponse response, 
         final AuthenticationException authException) throws IOException {
         
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Username or password is wrong");
     }
 
 }

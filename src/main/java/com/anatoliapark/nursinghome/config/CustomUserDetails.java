@@ -1,4 +1,4 @@
-package com.anatoliapark.nursinghome.config.security;
+package com.anatoliapark.nursinghome.config;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;

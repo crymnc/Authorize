@@ -2,12 +2,16 @@ package com.anatoliapark.nursinghome.model.auth;
 
 import com.anatoliapark.nursinghome.model.UserComponentContent;
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Entity(name = "user")
@@ -44,6 +48,7 @@ public class User extends BaseEntityAudit {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     @NotEmpty
+    @JsonIgnore
     private Collection<Role> roles;
 
     @OneToMany(
@@ -111,5 +116,9 @@ public class User extends BaseEntityAudit {
 
     public Collection<UserComponentContent> getUserComponentContents() {
         return userComponentContents;
+    }
+
+    public List<SimpleGrantedAuthority> getAuthority() {
+        return getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }

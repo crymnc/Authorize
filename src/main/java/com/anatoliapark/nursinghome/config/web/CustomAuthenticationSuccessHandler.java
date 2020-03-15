@@ -1,4 +1,4 @@
-package com.anatoliapark.nursinghome.config.security.web;
+package com.anatoliapark.nursinghome.config.web;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

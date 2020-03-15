@@ -2,13 +2,15 @@ package com.anatoliapark.nursinghome.repository.impl;
 
 import com.anatoliapark.nursinghome.model.base.BaseEntity;
 import com.anatoliapark.nursinghome.repository.EntityRepository;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

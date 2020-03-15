@@ -9,9 +9,6 @@ import java.util.Date;
 @MappedSuperclass
 public class BaseEntityAudit extends BaseEntity {
 
-    @Transient
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -45,6 +42,7 @@ public class BaseEntityAudit extends BaseEntity {
 
     @PrePersist
     private void setCreationParameters() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //User user = (User) authentication.getPrincipal();
         this.createdBy = 1L;
         this.createdAt = new Date();
@@ -55,6 +53,7 @@ public class BaseEntityAudit extends BaseEntity {
 
     @PreUpdate
     private void setUpdateParameters() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //User user = (User) authentication.getPrincipal();
         this.updatedBy = 1L;
         this.updatedAt = new Date();

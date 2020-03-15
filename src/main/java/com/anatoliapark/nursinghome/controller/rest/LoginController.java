@@ -1,7 +1,7 @@
 package com.anatoliapark.nursinghome.controller.rest;
 
 import com.anatoliapark.nursinghome.annotation.RestApiController;
-import com.anatoliapark.nursinghome.service.AuthenticationService;
+import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -11,7 +11,7 @@ import java.security.Principal;
 public class LoginController {
 
     @Autowired
-    AuthenticationService userService;
+    UserService userService;
 
     @GetMapping("/login")
     public String login(Principal principal) {
