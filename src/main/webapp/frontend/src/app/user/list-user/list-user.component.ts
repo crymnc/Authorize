@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../../model/user";
 import {Router} from "@angular/router";
-import {ApiService} from "../service/api.service";
-import {User} from "../model/user";
+import {ApiService} from "../../service/api.service";
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  selector: 'app-list-user',
+  templateUrl: './list-user.component.html',
+  styleUrls: ['./list-user.component.css']
 })
-export class MainComponent implements OnInit {
+export class ListUserComponent implements OnInit {
 
   users: User[];
   constructor(private router: Router, private apiService: ApiService) { }
@@ -25,5 +25,9 @@ export class MainComponent implements OnInit {
           error;
         });
   }
+
+  registerUser(): void {
+    this.router.navigate(['register']);
+  };
 
 }

@@ -20,21 +20,15 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    this.loginPage.successMessage = '';
     this.loginPage.errorMessage = '';
-    this.loginPage.isSuccess = false;
     this.loginPage.hasError = false;
     const loginPayload = {
       username: this.loginForm.controls.username.value,
       password: this.loginForm.controls.password.value
     }
     this.apiService.login(loginPayload).subscribe(data => {
-      this.loginPage.successMessage = data.message;
-      this.loginPage.isSuccess = true;
-      if (data.statusCode === 200) {
-        window.localStorage.setItem('token', data.result);
-        //this.router.navigate(['index']);
-      }
+      window.localStorage.setItem('token', data);
+      this.router.navigate(['users']);
     }, data => {
       this.loginPage.hasError = true;
       this.loginPage.errorMessage = data.error.message;

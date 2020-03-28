@@ -1,6 +1,7 @@
 package com.anatoliapark.nursinghome.model.auth;
 
 import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -17,6 +18,7 @@ public class AuthorityGroup extends BaseConstantEntity {
     private Collection<Authority> authorities;
 
     @ManyToMany(mappedBy = "authorityGroups", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Role> roles;
 
     public Collection<Authority> getAuthorities() {

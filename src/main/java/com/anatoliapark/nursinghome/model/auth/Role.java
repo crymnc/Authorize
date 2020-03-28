@@ -3,6 +3,7 @@ package com.anatoliapark.nursinghome.model.auth;
 import com.anatoliapark.nursinghome.model.UserComponent;
 import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,6 +22,7 @@ public class Role extends BaseConstantEntity {
     private Collection<AuthorityGroup> authorityGroups;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<User> users;
 
     @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})

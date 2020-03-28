@@ -3,6 +3,8 @@ package com.anatoliapark.nursinghome.model.auth;
 import com.anatoliapark.nursinghome.model.UserComponentContent;
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,6 +43,7 @@ public class User extends BaseEntityAudit {
     @Column(name = "last_activation_date")
     private Date lastActivationDate;
 
+    @Fetch(FetchMode.JOIN)
     @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE})
     @JoinTable(
             name = "user_role",
@@ -48,7 +51,6 @@ public class User extends BaseEntityAudit {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     @NotEmpty
-    @JsonIgnore
     private Collection<Role> roles;
 
     @OneToMany(
@@ -119,6 +121,6 @@ public class User extends BaseEntityAudit {
     }
 
     public List<SimpleGrantedAuthority> getAuthority() {
-        return getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        return getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_"+role.getName())).collect(Collectors.toList());
     }
 }

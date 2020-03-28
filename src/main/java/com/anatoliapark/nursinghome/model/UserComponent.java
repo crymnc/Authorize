@@ -2,6 +2,7 @@ package com.anatoliapark.nursinghome.model;
 
 import com.anatoliapark.nursinghome.model.auth.Role;
 import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.Collection;
 public class UserComponent extends BaseConstantEntity {
 
     @ManyToMany(mappedBy = "userComponents", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Role> roles;
 
     @OneToMany(
@@ -17,6 +19,7 @@ public class UserComponent extends BaseConstantEntity {
             orphanRemoval = true,
             cascade=CascadeType.ALL
     )
+    @JsonIgnore
     private Collection<UserComponentContent> userComponentContents;
 
     public Collection<Role> getRoles() {

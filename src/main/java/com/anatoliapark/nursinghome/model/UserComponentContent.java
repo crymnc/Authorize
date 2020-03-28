@@ -2,6 +2,7 @@ package com.anatoliapark.nursinghome.model;
 
 import com.anatoliapark.nursinghome.model.auth.User;
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -10,10 +11,12 @@ public class UserComponentContent extends BaseEntityAudit {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "component_id", referencedColumnName = "id")
+    @JsonIgnore
     private UserComponent component;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "content", nullable = false)

@@ -1,6 +1,7 @@
 package com.anatoliapark.nursinghome.model.webpage;
 
 import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ public class WebPageComponent extends BaseConstantEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "page_id", referencedColumnName = "id")
+    @JsonIgnore
     private WebPage webPage;
 
     @ManyToOne

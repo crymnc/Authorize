@@ -3,6 +3,7 @@ package com.anatoliapark.nursinghome.model.auth;
 import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
 import com.anatoliapark.nursinghome.model.webpage.WebPage;
 import com.anatoliapark.nursinghome.model.webpage.WebPageComponent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ public class AuthorityOption extends BaseEntityAudit {
 
     @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH} )
     @JoinColumn(name = "authority_id", referencedColumnName = "id")
+    @JsonIgnore
     private Authority authority;
 
     @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.DETACH} )
