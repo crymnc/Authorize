@@ -1,6 +1,4 @@
-import {Deserializable} from "./interface/deserializablel";
-
-export class LoginPage implements Deserializable{
+export class LoginPage {
   username: string;
   password: string;
   errorMessage: string;

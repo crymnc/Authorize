@@ -23,11 +23,12 @@
 
     <div class="form-group">
       <label for="roles">Role:</label>
-      <select  name="roles[]" class="form-control" id="roles" [(ngModel)]="roles" multiple>
-        <option *ngFor = "let role of roles" [ngValue] = "role">{{role.name}}</option>
+      <select  name="roles" class="form-control" id="roles" [(ngModel)]="roles" multiple>
+        <option *ngFor = "let role of allRoles" [ngValue] = "role">{{role.name}}</option>
       </select>
     </div>
 
     <button class="btn btn-success">Add</button>
+    <div class="alert alert-warning" *ngIf="hasError">{{errorMessage}}</div>
   </form>
 </div>

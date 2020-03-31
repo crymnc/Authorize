@@ -1,8 +1,13 @@
-import {Deserializable} from "./interface/deserializablel";
 import {Constant} from "../core/constant";
+import {UserComponent} from "./user.component";
 
-export class Role extends Constant implements Deserializable{
+export class Role extends Constant{
 
+  userComponents: Array<UserComponent> = new Array<UserComponent>();
+
+  constructor(){
+    super();
+  }
 
 }
 

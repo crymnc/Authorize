@@ -55,6 +55,7 @@ public class EntityRepositoryImpl implements EntityRepository {
     }
 
     @Override
+    @Transactional
     public <T extends BaseEntity> void delete(T constantEntity) {
         this.entityManager.remove(constantEntity);
     }

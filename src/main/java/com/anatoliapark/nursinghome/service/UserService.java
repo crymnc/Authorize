@@ -32,6 +32,11 @@ public class UserService {
         return newUser;
     }
 
+    public void deleteUser(Long id){
+        User user = entityRepository.find(id,User.class);
+        entityRepository.delete(user);
+    }
+
     public User findUserBy(String username){
         HashMap<String,String> parameter = new HashMap();
         parameter.put("username",username);

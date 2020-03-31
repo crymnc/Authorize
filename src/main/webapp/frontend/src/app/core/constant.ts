@@ -1,10 +1,11 @@
-import {Deserializable} from "../model/interface/deserializablel";
+export class Constant{
+  id:number;
+  name:string;
+  constructor(){}
 
-export class Constant implements Deserializable{
-  constructor(public id:number, public name:string){}
-
-  deserialize(input: any): this {
-    Object.assign(this , input);
-    return this;
+  static deserialize(input: any): Constant {
+    let constant:Constant = new Constant();
+    Object.assign(constant , input);
+    return constant;
   }
 }

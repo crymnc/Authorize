@@ -13,8 +13,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-@RestApiController
 @CrossOrigin(origins = "*", maxAge = 3600)
+@RestApiController
+@RequestMapping("/api")
 public class AuthenticationController {
 
     @Autowired
