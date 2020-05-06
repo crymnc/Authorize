@@ -5,30 +5,34 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LoginComponent } from './login/login.component';
-import { MainComponent } from './main/main.component';
 import {ApiService} from "./service/api.service";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {TokenIncepter} from "./core/token.incepter";
+import {JwtInterceptor} from "./helper/jwt.interceptor";
 import { ListUserComponent } from './user/list-user/list-user.component';
 import { RegisterUserComponent } from './user/register-user/register-user.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarModule } from 'ng-sidebar';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent,
     ListUserComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    SidebarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SidebarModule.forRoot()
   ],
   providers: [ApiService, {provide: HTTP_INTERCEPTORS,
-    useClass: TokenIncepter,
+    useClass: JwtInterceptor,
     multi : true}],
   bootstrap: [AppComponent]
 })

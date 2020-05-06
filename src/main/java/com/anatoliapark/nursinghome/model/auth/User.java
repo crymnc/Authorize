@@ -54,10 +54,10 @@ public class User extends BaseEntityAudit {
     private Collection<Role> roles;
 
     @OneToMany(
-            mappedBy = "user",
             orphanRemoval = true,
-            cascade=CascadeType.REMOVE
+            cascade={CascadeType.ALL}
     )
+    @JoinColumn(name = "user_id")
     private Collection<UserComponentContent> userComponentContents;
 
     public String getName() {

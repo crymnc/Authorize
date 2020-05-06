@@ -4,21 +4,20 @@ import {Router} from "@angular/router";
 import {ApiService} from "../../service/api.service";
 import {Role} from "../../model/role";
 import {User} from "../../model/user";
-import {ErrorSuccessMessage} from "../../model/base/errorSuccessMessage";
+import {ComponentContent} from "../../model/component.content";
 
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.css']
 })
-export class RegisterUserComponent extends ErrorSuccessMessage implements OnInit {
+export class RegisterUserComponent implements OnInit {
 
 
   user: User;
   allRoles: Role[];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private apiService: ApiService) {
-    super();
   }
 
   ngOnInit() {
@@ -28,16 +27,17 @@ export class RegisterUserComponent extends ErrorSuccessMessage implements OnInit
         this.allRoles = data
       }
     );
-
   }
 
+
   onSubmit(userInfo : NgForm) {
-    this.apiService.registerNewUser(userInfo.value)
+    let user: User = User.deserialize(userInfo.value);
+
+    this.apiService.registerNewUser(user)
       .subscribe(data => {
         this.router.navigate(['users']);
       }, error => {
-        this.hasError =true;
-        this.errorMessage = JSON.parse(error.error).message;
+
       });
   }
 

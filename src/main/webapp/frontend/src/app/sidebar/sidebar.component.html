@@ -1,0 +1,51 @@
+<!-- Container for sidebar(s) + page content -->
+<div *ngIf="currentUser; else elseBlock">
+
+<ng-sidebar-container style="position: fixed !Important;">
+  <ng-sidebar
+    [(opened)]="_opened"
+    [mode]="'slide'"
+    [keyClose]="true"
+    [position]="'left'"
+    [closeOnClickOutside]="true"
+    [closeOnClickBackdrop]="true"
+    [sidebarClass]="'demo-sidebar'"
+    [ariaLabel]="'My sidebar'">
+    <!-- Sidebar Holder -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>Bootstrap Sidebar</h3>
+      </div>
+
+      <ul class="list-unstyled components">
+        <p>Dummy Heading</p>
+        <li class="active">
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Users</a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li><a href="../users">List Users</a></li>
+            <li><a href="../user/register">Register User</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Portfolio</a>
+        </li>
+        <li>
+          <a href="#">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  </ng-sidebar>
+
+  <!-- Page content -->
+  <div ng-sidebar-content>
+    <button (click)="_toggleSidebar()">Toggle sidebar</button>
+    <router-outlet></router-outlet>
+  </div>
+
+</ng-sidebar-container>
+</div>
+<ng-template #elseBlock><router-outlet></router-outlet></ng-template>

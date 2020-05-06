@@ -9,13 +9,12 @@ import javax.persistence.*;
 @Entity(name = "user_component_content")
 public class UserComponentContent extends BaseEntityAudit {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "component_id", referencedColumnName = "id")
-    @JsonIgnore
     private UserComponent component;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable=false, insertable = false, updatable = false)
     @JsonIgnore
     private User user;
 
@@ -45,4 +44,5 @@ public class UserComponentContent extends BaseEntityAudit {
     public void setContent(String content) {
         this.content = content;
     }
+
 }

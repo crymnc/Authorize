@@ -3,16 +3,12 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {User} from "../model/user";
 import {Role} from "../model/role";
-import {GlobalVariables} from "../core/global.variables";
+import {GlobalVariables} from "../utils/global.variables";
 
 @Injectable()
 export class ApiService {
 
   constructor(private http: HttpClient) {
-  }
-
-  login(user): Observable<string> {
-    return this.http.post(GlobalVariables.BASE_URL + '/generate-token', user, {responseType: 'text'});
   }
 
   getUsers(): Observable<User[]> {
@@ -27,8 +23,8 @@ export class ApiService {
     return this.http.post(GlobalVariables.BASE_URL + '/user/register', userInfo, {responseType: 'text'});
   }
 
-  deleteUser(userId: number) {
-    this.http.delete(GlobalVariables.BASE_URL + '/user/' + userId);
+  deleteUser(userId: number):Observable<Object>{
+    return this.http.delete(GlobalVariables.BASE_URL + '/user/' + userId);
   }
 
 

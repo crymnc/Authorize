@@ -2,25 +2,23 @@ package com.anatoliapark.nursinghome.service;
 
 import com.anatoliapark.nursinghome.model.auth.User;
 import com.anatoliapark.nursinghome.repository.EntityRepository;
-import com.anatoliapark.nursinghome.repository.impl.ConstantRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService extends BaseService {
 
     @Autowired
     private EntityRepository entityRepository;
 
     @Autowired
-    private ConstantRepositoryImpl constantRepository;
+    private ConstantService constantService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -33,29 +31,25 @@ public class UserService {
     }
 
     public void deleteUser(Long id){
-        User user = entityRepository.find(id,User.class);
-        entityRepository.delete(user);
+        entityRepository.delete(id);
     }
 
-    public User findUserBy(String username){
-        HashMap<String,String> parameter = new HashMap();
-        parameter.put("username",username);
-        List<User> users = entityRepository.findBy(parameter, User.class);
-        if(!users.isEmpty())
-            return users.get(0);
-        throw new UsernameNotFoundException("User not found");
+    public User findUserByUsername(String username){
+        User user = new User();
+        user.setUsername(username);
+        return (User) entityRepository.findOne(Example.of(user));
     }
 
     public User findLoggedUser(){
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (userDetails instanceof UserDetails) {
             String username = ((UserDetails)userDetails).getUsername();
-            return findUserBy(username);
+            return findUserByUsername(username);
         }
         return null;
     }
 
     public List<User> findAllUsers(){
-        return entityRepository.findAll(User.class);
+        return entityRepository.findAll(Example.of(new User()));
     }
 }

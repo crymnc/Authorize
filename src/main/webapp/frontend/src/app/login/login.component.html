@@ -3,16 +3,14 @@
   <div class="card">
     <div class="card-body">
       <form class="form-group" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="alert alert-warning" *ngIf="loginPage.hasError">{{loginPage.errorMessage}}</div>
-        <div class="alert alert-success" *ngIf="loginPage.isSuccess">{{loginPage.successMessage}}</div>
         <div class="form-group">
           <label for="username">User Name :</label>
-          <input type="text" class="form-control" id="username" formControlName="username" [(ngModel)]="loginPage.username" placeholder="Enter User Name">
+          <input type="text" class="form-control" id="username" formControlName="username" placeholder="Enter User Name">
           <div class="error" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched">Username is required</div>
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" class="form-control" [(ngModel)]="loginPage.password" id="password" formControlName="password" placeholder="Enter password">
+          <input type="password" class="form-control" id="password" formControlName="password" placeholder="Enter password">
           <div class="error" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Password is required</div>
         </div>
         <button type='submit' class="btn btn-success">Login</button>
