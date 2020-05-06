@@ -23,7 +23,7 @@
     "@angular/router": "~8.2.14",
     "@ng-select/ng-select": "^3.7.3",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng-sidebar": "^9.2.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
