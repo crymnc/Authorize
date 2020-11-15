@@ -1,9 +1,9 @@
 package com.anatoliapark.nursinghome.controller.rest;
 
 import com.anatoliapark.nursinghome.annotation.RestApiController;
+import com.anatoliapark.nursinghome.entity.auth.RoleEntity;
 import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
-import com.anatoliapark.nursinghome.model.auth.Role;
-import com.anatoliapark.nursinghome.model.auth.User;
+import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.repository.EntityRepository;
 import com.anatoliapark.nursinghome.service.ConstantService;
 import com.anatoliapark.nursinghome.service.UserService;
@@ -34,7 +34,7 @@ public class UserController {
             userService.registerNewUser(user);
         }
         else{
-            throw new UserAlreadyExistException("User already exists");
+            throw new UserAlreadyExistException("UserEntity already exists");
         }
         return "Success";
     }
@@ -45,8 +45,8 @@ public class UserController {
     }
 
     @GetMapping("/roles")
-    public List<Role> getRoles(){
-        return constantService.findAll(Role.class);
+    public List<RoleEntity> getRoles(){
+        return constantService.findAll(RoleEntity.class);
     }
 
     @GetMapping(value = "/users")

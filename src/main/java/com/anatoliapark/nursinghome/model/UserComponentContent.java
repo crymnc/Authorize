@@ -1,25 +1,32 @@
 package com.anatoliapark.nursinghome.model;
 
-import com.anatoliapark.nursinghome.model.auth.User;
-import com.anatoliapark.nursinghome.model.base.BaseEntityAudit;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.anatoliapark.nursinghome.annotation.EntityMapping;
+import com.anatoliapark.nursinghome.entity.UserComponentContentEntity;
+import com.anatoliapark.nursinghome.model.base.BaseModel;
 
-import javax.persistence.*;
+@EntityMapping(entityClass = UserComponentContentEntity.class)
+public class UserComponentContent extends BaseModel {
 
-@Entity(name = "user_component_content")
-public class UserComponentContent extends BaseEntityAudit {
+    private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "component_id", referencedColumnName = "id")
     private UserComponent component;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable=false, insertable = false, updatable = false)
-    @JsonIgnore
     private User user;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+    public UserComponentContent(UserComponentContentEntity userComponentContentEntity) {
+        super(userComponentContentEntity);
+        this.setComponent(new UserComponent(userComponentContentEntity.getComponent()));
+        this.setUser(new User(userComponentContentEntity.getUser()));
+        this.setContent(userComponentContentEntity.getContent());
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public UserComponent getComponent() {
         return component;
@@ -36,13 +43,4 @@ public class UserComponentContent extends BaseEntityAudit {
     public void setUser(User user) {
         this.user = user;
     }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
 }

@@ -2,8 +2,9 @@ package com.anatoliapark.nursinghome.controller.rest;
 
 import com.anatoliapark.nursinghome.annotation.RestApiController;
 import com.anatoliapark.nursinghome.config.token.JwtTokenUtil;
-import com.anatoliapark.nursinghome.dto.auth.UserDTO;
-import com.anatoliapark.nursinghome.model.auth.User;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
+import com.anatoliapark.nursinghome.model.Token;
+import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.service.ConstantService;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,16 @@ public class AuthenticationController {
     private ConstantService constantService;
 
     @PostMapping(value = "/authenticate")
-    public @ResponseBody UserDTO authenticate(@RequestBody User loginUser) throws AuthenticationException {
+    public @ResponseBody
+    Token authenticate(@RequestBody UserEntity loginUser) throws AuthenticationException {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
         User user = userService.findUserByUsername(loginUser.getUsername());
-        UserDTO userDTO = UserDTO.updateDTOFromEntity(user);
-        userDTO.setToken(jwtTokenUtil.generateToken(user));
-        return userDTO;
+        Token token = new Token();
+        token.setUsername(user.getUsername());
+        token.setName(user.getName());
+        token.setLastName(user.getLastName());
+        token.setToken(jwtTokenUtil.generateToken(user));
+        return token;
     }
 }

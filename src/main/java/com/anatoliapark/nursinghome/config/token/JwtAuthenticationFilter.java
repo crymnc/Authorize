@@ -1,6 +1,6 @@
 package com.anatoliapark.nursinghome.config.token;
 
-import com.anatoliapark.nursinghome.model.auth.User;
+import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.service.UserService;
 import com.anatoliapark.nursinghome.util.Constants;
 import io.jsonwebtoken.ExpiredJwtException;

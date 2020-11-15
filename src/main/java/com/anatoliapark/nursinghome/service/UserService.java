@@ -1,7 +1,10 @@
 package com.anatoliapark.nursinghome.service;
 
-import com.anatoliapark.nursinghome.model.auth.User;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
+import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.repository.EntityRepository;
+import com.anatoliapark.nursinghome.util.Mapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,16 +21,15 @@ public class UserService extends BaseService {
     private EntityRepository entityRepository;
 
     @Autowired
-    private ConstantService constantService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
 
-    public User registerNewUser(User newUser){
+    public UserEntity registerNewUser(User newUser){
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        UserEntity newUserEntity = new UserEntity();
+        BeanUtils.copyProperties(newUser, newUserEntity);
         entityRepository.save(newUser);
-        return newUser;
+        return newUserEntity;
     }
 
     public void deleteUser(Long id){
@@ -35,9 +37,10 @@ public class UserService extends BaseService {
     }
 
     public User findUserByUsername(String username){
-        User user = new User();
-        user.setUsername(username);
-        return (User) entityRepository.findOne(Example.of(user));
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        userEntity = (UserEntity) entityRepository.findOne(Example.of(userEntity));
+        return userEntity.getModal();
     }
 
     public User findLoggedUser(){
@@ -50,6 +53,7 @@ public class UserService extends BaseService {
     }
 
     public List<User> findAllUsers(){
-        return entityRepository.findAll(Example.of(new User()));
+        List<UserEntity> userEntities = entityRepository.findAll(Example.of(new UserEntity()));
+        return Mapper.getModelList(userEntities);
     }
 }

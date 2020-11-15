@@ -1,40 +1,30 @@
 package com.anatoliapark.nursinghome.model;
 
-import com.anatoliapark.nursinghome.model.auth.Role;
-import com.anatoliapark.nursinghome.model.base.BaseConstantEntity;
+import com.anatoliapark.nursinghome.annotation.EntityMapping;
+import com.anatoliapark.nursinghome.entity.UserComponentEntity;
+import com.anatoliapark.nursinghome.model.base.BaseConstantModel;
+import com.anatoliapark.nursinghome.util.Mapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
-@Entity(name = "user_component")
-public class UserComponent extends BaseConstantEntity {
+@EntityMapping(entityClass = UserComponentEntity.class)
+public class UserComponent extends BaseConstantModel {
 
-    @ManyToMany(mappedBy = "userComponents", fetch = FetchType.LAZY)
     @JsonIgnore
-    private Collection<Role> roles;
+    private List<UserComponentContent> contents;
 
-    @OneToMany(
-            mappedBy = "component",
-            orphanRemoval = true,
-            cascade=CascadeType.ALL
-    )
-    @JsonIgnore
-    private Collection<UserComponentContent> userComponentContents;
-
-    public Collection<Role> getRoles() {
-        return roles;
+    public UserComponent(UserComponentEntity userComponentEntity) {
+        super(userComponentEntity);
+        this.setContents(Mapper.getModelList(userComponentEntity.getUserComponentContents()));
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public List<UserComponentContent> getContents() {
+        return contents;
     }
 
-    public Collection<UserComponentContent> getUserComponentContents() {
-        return userComponentContents;
+    public void setContents(List<UserComponentContent> contents) {
+        this.contents = contents;
     }
 
-    public void setUserComponentContents(Collection<UserComponentContent> userComponentContents) {
-        this.userComponentContents = userComponentContents;
-    }
 }

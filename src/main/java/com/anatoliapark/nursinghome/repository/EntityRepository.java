@@ -1,6 +1,6 @@
 package com.anatoliapark.nursinghome.repository;
 
-import com.anatoliapark.nursinghome.model.base.BaseEntity;
+import com.anatoliapark.nursinghome.entity.base.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

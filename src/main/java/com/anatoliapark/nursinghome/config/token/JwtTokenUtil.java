@@ -1,7 +1,7 @@
 package com.anatoliapark.nursinghome.config.token;
 
 
-import com.anatoliapark.nursinghome.model.auth.User;
+import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.util.Constants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil implements Serializable {

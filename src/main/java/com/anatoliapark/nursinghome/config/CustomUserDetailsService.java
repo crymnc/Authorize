@@ -1,6 +1,6 @@
 package com.anatoliapark.nursinghome.config;
 
-import com.anatoliapark.nursinghome.model.auth.User;
+import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
