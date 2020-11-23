@@ -5,10 +5,7 @@ import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.entity.base.BaseEntityAudit;
 import com.anatoliapark.nursinghome.model.UserComponentContent;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity(name = "user_component_content")
 @ModelMapping(modelClass = UserComponentContent.class)
@@ -18,7 +15,7 @@ public class UserComponentContentEntity extends BaseEntityAudit{
     @JoinColumn(name = "component_id", referencedColumnName = "id")
     private UserComponentEntity component;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 
@@ -27,9 +24,7 @@ public class UserComponentContentEntity extends BaseEntityAudit{
 
     public UserComponentContentEntity(UserComponentContent userComponentContent){
         super(userComponentContent);
-        this.setComponent(new UserComponentEntity(userComponentContent.getComponent()));
         this.setContent(userComponentContent.getContent());
-        this.setUser(new UserEntity(userComponentContent.getUser()));
     }
 
     public UserComponentContentEntity(){}

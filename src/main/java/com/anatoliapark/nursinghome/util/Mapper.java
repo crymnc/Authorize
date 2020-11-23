@@ -13,7 +13,9 @@ public class Mapper {
     public static <T extends BaseModel> List<T> getModelList(Collection<? extends BaseEntity> entityCollection){
         List<T> modelList = new ArrayList<>();
         for(BaseEntity entity : entityCollection){
-            modelList.add(entity.getModal());
+            T modal = entity.getModal();
+            if(modal != null)
+                modelList.add(modal);
         }
         return modelList;
     }

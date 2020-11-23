@@ -13,7 +13,7 @@ import java.util.Set;
 @ModelMapping(modelClass = Role.class)
 public class RoleEntity extends BaseConstantEntity {
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH,CascadeType.MERGE})
     @JoinTable(
             name = "role_authoritygroup",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
@@ -21,13 +21,16 @@ public class RoleEntity extends BaseConstantEntity {
     )
     private Set<AuthorityGroupEntity> authorityGroups;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH,CascadeType.MERGE})
     @JoinTable(
             name = "role_component",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "component_id", referencedColumnName = "id")}
     )
     private Set<UserComponentEntity> userComponents;
+
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private Set<UserEntity> users;
 
     public RoleEntity(Role role) {
         super(role);
@@ -43,6 +46,10 @@ public class RoleEntity extends BaseConstantEntity {
 
     public void setAuthorityGroups(Set<AuthorityGroupEntity> authorityGroups) {
         this.authorityGroups = authorityGroups;
+    }
+
+    public Set<UserEntity> getUsers() {
+        return users;
     }
 
     public Set<UserComponentEntity> getUserComponents() {

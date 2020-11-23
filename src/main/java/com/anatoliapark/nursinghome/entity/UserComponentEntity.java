@@ -7,7 +7,6 @@ import com.anatoliapark.nursinghome.model.UserComponent;
 import com.anatoliapark.nursinghome.util.Mapper;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity(name = "user_component")
@@ -15,7 +14,7 @@ import java.util.Set;
 public class UserComponentEntity extends BaseConstantEntity {
 
     @ManyToMany(mappedBy = "userComponents", fetch = FetchType.LAZY)
-    private Collection<RoleEntity> roles;
+    private Set<RoleEntity> roles;
 
     @OneToMany(
             mappedBy = "component",
@@ -31,11 +30,11 @@ public class UserComponentEntity extends BaseConstantEntity {
 
     public UserComponentEntity(){}
 
-    public Collection<RoleEntity> getRoles() {
+    public Set<RoleEntity> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<RoleEntity> roles) {
+    public void setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
     }
 

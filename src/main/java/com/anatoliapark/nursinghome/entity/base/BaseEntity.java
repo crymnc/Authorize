@@ -4,11 +4,13 @@ import com.anatoliapark.nursinghome.annotation.ModelMapping;
 import com.anatoliapark.nursinghome.model.base.BaseModel;
 import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.LazyInitializationException;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 @Log4j2
@@ -82,7 +84,14 @@ public abstract class BaseEntity implements Serializable {
                 }
             }
             throw new RuntimeException("Model constructor with parameter is missing");
-        } catch (Exception e) {
+        }
+        catch (InvocationTargetException e){
+            if(e.getTargetException() instanceof LazyInitializationException){
+                return null;
+            }
+            log.error(e);
+        }
+        catch (Exception e) {
             log.error(e.getStackTrace());
         }
         return null;

@@ -69,8 +69,6 @@ public class UserEntity extends BaseEntityAudit {
         this.setUserComponentContents(Mapper.getEntitySet(user.getUserComponentContents()));
     }
 
-    public UserEntity(){}
-
     public String getName() {
         return name;
     }
