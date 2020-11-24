@@ -1,7 +1,7 @@
 package com.anatoliapark.nursinghome.service;
 
 import com.anatoliapark.nursinghome.entity.base.BaseConstantEntity;
-import com.anatoliapark.nursinghome.repository.ConstantRepository;
+import com.anatoliapark.nursinghome.repository.base.ConstantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;

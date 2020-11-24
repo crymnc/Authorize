@@ -17,6 +17,8 @@ public class AuthorityGroup extends BaseConstantModel {
         this.setAuthorities(Mapper.getModelList(authorityGroupEntity.getAuthorities()));
     }
 
+    public AuthorityGroup(){super();}
+
     public List<Authority> getAuthorities() {
         return authorities;
     }

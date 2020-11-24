@@ -2,9 +2,8 @@ package com.anatoliapark.nursinghome.service;
 
 import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.model.User;
-import com.anatoliapark.nursinghome.repository.EntityRepository;
+import com.anatoliapark.nursinghome.repository.base.EntityRepository;
 import com.anatoliapark.nursinghome.util.Mapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,9 +25,8 @@ public class UserService extends BaseService {
 
     public UserEntity registerNewUser(User newUser){
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        UserEntity newUserEntity = new UserEntity();
-        BeanUtils.copyProperties(newUser, newUserEntity);
-        entityRepository.save(newUser);
+        UserEntity newUserEntity = new UserEntity(newUser);
+        entityRepository.save(newUserEntity);
         return newUserEntity;
     }
 
@@ -40,7 +38,11 @@ public class UserService extends BaseService {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(username);
         userEntity = (UserEntity) entityRepository.findOne(Example.of(userEntity));
-        return userEntity.getModal();
+        if(userEntity == null)
+            return null;
+        User user = Mapper.convertToModel(userEntity);
+        return user;
+
     }
 
     public User findLoggedUser(){

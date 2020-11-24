@@ -1,6 +1,7 @@
 package com.anatoliapark.nursinghome.entity.base;
 
 import com.anatoliapark.nursinghome.entity.auth.UserEntity;
+import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.model.base.BaseModel;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,7 +52,7 @@ public abstract class BaseEntityAudit extends BaseEntity{
     @PrePersist
     private void setCreationParameters() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity user = (UserEntity) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         this.createdBy = user.getId();
         this.createdAt = new Date();
 

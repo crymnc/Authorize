@@ -1,12 +1,9 @@
 package com.anatoliapark.nursinghome.model.base;
 
-import com.anatoliapark.nursinghome.annotation.EntityMapping;
-import com.anatoliapark.nursinghome.entity.base.BaseEntity;
 import com.anatoliapark.nursinghome.entity.base.BaseEntityAudit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.extern.log4j.Log4j2;
 
-import java.lang.annotation.Annotation;
 import java.util.Date;
 
 @Log4j2
@@ -75,23 +72,5 @@ public abstract class BaseModel {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @JsonIgnore
-    public <T extends BaseEntity> Class<T> getEntityClass(){
-        Annotation annotation = this.getClass().getAnnotation(EntityMapping.class);
-        if(annotation != null){
-            try {
-                Class<T> entityClass = ((EntityMapping) annotation).entityClass();
-                return entityClass;
-            }
-            catch (Exception e){
-                log.error(e);
-            }
-        }
-        else{
-            throw new RuntimeException("EntityMapping annotation not found on model");
-        }
-        return null;
     }
 }

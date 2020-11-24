@@ -66,8 +66,14 @@ public class UserEntity extends BaseEntityAudit {
         this.setLastName(user.getLastName());
         this.setLastActivationDate(user.getLastActivationDate());
         this.setRoles(Mapper.getEntitySet(user.getRoles()));
-        this.setUserComponentContents(Mapper.getEntitySet(user.getUserComponentContents()));
+        Set<UserComponentContentEntity> userComponentContentEntities = Mapper.getEntitySet(user.getUserComponentContents());
+        for(UserComponentContentEntity userComponentContentEntity:userComponentContentEntities){
+            userComponentContentEntity.setUser(this);
+        }
+        this.setUserComponentContents(userComponentContentEntities);
     }
+
+    public UserEntity(){}
 
     public String getName() {
         return name;

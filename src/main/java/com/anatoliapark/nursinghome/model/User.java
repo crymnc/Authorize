@@ -5,6 +5,7 @@ import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.model.base.BaseModel;
 import com.anatoliapark.nursinghome.util.Mapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class User extends BaseModel {
 
     private String name,lastName,username;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Boolean isActive;
     private Date lastActivationDate;
@@ -34,7 +35,7 @@ public class User extends BaseModel {
         this.setUserComponentContents(Mapper.getModelSet(userEntity.getUserComponentContents()));
     }
 
-    public User(){}
+    public User(){super();}
 
     public String getName() {
         return name;

@@ -33,8 +33,7 @@ public class AuthenticationController {
     private ConstantService constantService;
 
     @PostMapping(value = "/authenticate")
-    public @ResponseBody
-    Token authenticate(@RequestBody UserEntity loginUser) throws AuthenticationException {
+    public @ResponseBody Token authenticate(@RequestBody UserEntity loginUser) throws AuthenticationException {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
         User user = userService.findUserByUsername(loginUser.getUsername());

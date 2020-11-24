@@ -5,6 +5,7 @@ import com.anatoliapark.nursinghome.entity.auth.RoleEntity;
 import com.anatoliapark.nursinghome.entity.base.BaseConstantEntity;
 import com.anatoliapark.nursinghome.model.UserComponent;
 import com.anatoliapark.nursinghome.util.Mapper;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -39,7 +40,9 @@ public class UserComponentEntity extends BaseConstantEntity {
     }
 
     public Set<UserComponentContentEntity> getUserComponentContents() {
-        return userComponentContents;
+        if(Hibernate.isInitialized(userComponentContents))
+            return userComponentContents;
+        return null;
     }
 
     public void setUserComponentContents(Set<UserComponentContentEntity> userComponentContents) {

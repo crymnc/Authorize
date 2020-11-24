@@ -21,6 +21,8 @@ public class AuthorityOption extends BaseModel {
         this.setActive(authorityOptionEntity.getVisible());
     }
 
+    public AuthorityOption(){super();}
+
     public Authority getAuthority() {
         return authority;
     }

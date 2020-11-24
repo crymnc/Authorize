@@ -4,7 +4,7 @@ import com.anatoliapark.nursinghome.annotation.RestApiController;
 import com.anatoliapark.nursinghome.entity.auth.RoleEntity;
 import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
 import com.anatoliapark.nursinghome.model.User;
-import com.anatoliapark.nursinghome.repository.EntityRepository;
+import com.anatoliapark.nursinghome.repository.base.EntityRepository;
 import com.anatoliapark.nursinghome.service.ConstantService;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

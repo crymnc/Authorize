@@ -22,6 +22,8 @@ public class Role extends BaseConstantModel {
         setAuthorityGroups(Mapper.getModelList(roleEntity.getAuthorityGroups()));
     }
 
+    public Role(){ super(); }
+
     public List<AuthorityGroup> getAuthorityGroups() {
         return authorityGroups;
     }

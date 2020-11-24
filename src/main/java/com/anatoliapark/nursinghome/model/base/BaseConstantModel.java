@@ -27,4 +27,6 @@ public class BaseConstantModel extends BaseModel {
         this.setDescription(baseConstantEntity.getDsc());
         this.setName(baseConstantEntity.getName());
     }
+
+    public BaseConstantModel(){super();}
 }

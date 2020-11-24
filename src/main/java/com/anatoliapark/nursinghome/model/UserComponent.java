@@ -19,6 +19,8 @@ public class UserComponent extends BaseConstantModel {
         this.setContents(Mapper.getModelList(userComponentEntity.getUserComponentContents()));
     }
 
+    public UserComponent(){super();}
+
     public List<UserComponentContent> getContents() {
         return contents;
     }

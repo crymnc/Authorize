@@ -16,6 +16,8 @@ public class Authority extends BaseConstantModel {
         setAuthorityOptions(Mapper.getModelList(authorityEntity.getAuthorityOptions()));
     }
 
+    public Authority(){super();}
+
     public List<AuthorityOption> getAuthorityOptions() {
         return authorityOptions;
     }

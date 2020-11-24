@@ -13,7 +13,7 @@ import java.util.Set;
 @ModelMapping(modelClass = AuthorityGroup.class)
 public class AuthorityGroupEntity extends BaseConstantEntity {
 
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH,CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH,CascadeType.MERGE},fetch = FetchType.EAGER)
     @JoinTable(
             name = "authoritygroup_authority",
             joinColumns = {@JoinColumn(name = "authority_group_id", referencedColumnName = "id")},

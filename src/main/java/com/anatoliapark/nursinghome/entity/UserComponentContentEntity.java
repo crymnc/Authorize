@@ -25,6 +25,7 @@ public class UserComponentContentEntity extends BaseEntityAudit{
     public UserComponentContentEntity(UserComponentContent userComponentContent){
         super(userComponentContent);
         this.setContent(userComponentContent.getContent());
+        this.setComponent(new UserComponentEntity(userComponentContent.getComponent()));
     }
 
     public UserComponentContentEntity(){}
@@ -52,5 +53,7 @@ public class UserComponentContentEntity extends BaseEntityAudit{
     public void setContent(String content) {
         this.content = content;
     }
+
+
 
 }

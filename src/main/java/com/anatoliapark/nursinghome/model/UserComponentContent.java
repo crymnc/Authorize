@@ -11,14 +11,16 @@ public class UserComponentContent extends BaseModel {
 
     private UserComponent component;
 
-    private User user;
+    private Long userId;
 
     public UserComponentContent(UserComponentContentEntity userComponentContentEntity) {
         super(userComponentContentEntity);
         this.setComponent(new UserComponent(userComponentContentEntity.getComponent()));
-        this.setUser(new User(userComponentContentEntity.getUser()));
+        this.setUserId(userComponentContentEntity.getUser().getId());
         this.setContent(userComponentContentEntity.getContent());
     }
+
+    public UserComponentContent(){super();}
 
     public String getContent() {
         return content;
@@ -36,11 +38,11 @@ public class UserComponentContent extends BaseModel {
         this.component = component;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
