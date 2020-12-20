@@ -25,12 +25,13 @@ public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     protected Long id;
 
     @Column(name="discontinue_date")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date discontinueDate;
+
 
     public Long getId() {
         return id;

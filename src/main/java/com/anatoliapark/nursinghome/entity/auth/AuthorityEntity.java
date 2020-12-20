@@ -6,7 +6,7 @@ import com.anatoliapark.nursinghome.model.Authority;
 import com.anatoliapark.nursinghome.util.Mapper;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name="authority")
@@ -18,27 +18,33 @@ public class AuthorityEntity extends BaseConstantEntity{
             orphanRemoval = true,
             cascade=CascadeType.REMOVE
     )
-    private Collection<AuthorityOptionEntity> authorityOptions;
+    private Set<AuthorityOptionEntity> authorityOptions;
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-    private Set<AuthorityGroupEntity> authorityGroups;
+    private Set<AuthorityGroupEntity> authorityGroups = new HashSet<>();
 
     public AuthorityEntity(Authority authority) {
         super(authority);
-        this.setAuthorityOptions(Mapper.getEntityList(authority.getAuthorityOptions()));
+        Set<AuthorityOptionEntity> authorityOptionEntities = Mapper.getEntitySet(authority.getAuthorityOptions());
+        authorityOptionEntities.forEach(authorityOptionEntity -> authorityOptionEntity.setAuthority(this));
+        this.setAuthorityOptions(authorityOptionEntities);
     }
 
     public AuthorityEntity(){}
 
-    public Collection<AuthorityOptionEntity> getAuthorityOptions() {
+    public Set<AuthorityOptionEntity> getAuthorityOptions() {
         return authorityOptions;
     }
 
-    public void setAuthorityOptions(Collection<AuthorityOptionEntity> authorityOptions) {
+    public void setAuthorityOptions(Set<AuthorityOptionEntity> authorityOptions) {
         this.authorityOptions = authorityOptions;
     }
 
     public Set<AuthorityGroupEntity> getAuthorityGroups() {
         return authorityGroups;
+    }
+
+    public void addAuthorityGroup(AuthorityGroupEntity authorityGroupEntity){
+        this.authorityGroups.add(authorityGroupEntity);
     }
 }

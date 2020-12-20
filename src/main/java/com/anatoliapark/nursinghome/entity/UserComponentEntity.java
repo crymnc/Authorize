@@ -8,6 +8,7 @@ import com.anatoliapark.nursinghome.util.Mapper;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "user_component")
@@ -15,7 +16,7 @@ import java.util.Set;
 public class UserComponentEntity extends BaseConstantEntity {
 
     @ManyToMany(mappedBy = "userComponents", fetch = FetchType.LAZY)
-    private Set<RoleEntity> roles;
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @OneToMany(
             mappedBy = "component",
@@ -35,8 +36,8 @@ public class UserComponentEntity extends BaseConstantEntity {
         return roles;
     }
 
-    public void setRoles(Set<RoleEntity> roles) {
-        this.roles = roles;
+    public void addRole(RoleEntity roleEntity) {
+        this.roles.add(roleEntity);
     }
 
     public Set<UserComponentContentEntity> getUserComponentContents() {

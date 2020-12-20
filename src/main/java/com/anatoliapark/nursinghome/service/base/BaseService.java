@@ -1,4 +1,4 @@
-package com.anatoliapark.nursinghome.service;
+package com.anatoliapark.nursinghome.service.base;
 
 public abstract class BaseService {
     protected  <T> T createInstance(Class<T> c){

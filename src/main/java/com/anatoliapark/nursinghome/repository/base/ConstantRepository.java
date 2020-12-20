@@ -1,9 +1,0 @@
-package com.anatoliapark.nursinghome.repository.base;
-
-import com.anatoliapark.nursinghome.entity.base.BaseConstantEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-
-
-public interface ConstantRepository<T extends BaseConstantEntity> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
-}

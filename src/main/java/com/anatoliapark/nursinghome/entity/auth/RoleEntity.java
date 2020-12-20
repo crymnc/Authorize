@@ -7,6 +7,7 @@ import com.anatoliapark.nursinghome.model.Role;
 import com.anatoliapark.nursinghome.util.Mapper;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "role")
@@ -30,12 +31,16 @@ public class RoleEntity extends BaseConstantEntity {
     private Set<UserComponentEntity> userComponents;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Set<UserEntity> users;
+    private Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity(Role role) {
         super(role);
-        this.setAuthorityGroups(Mapper.getEntitySet(role.getAuthorityGroups()));
-        this.setUserComponents(Mapper.getEntitySet(role.getUserComponents()));
+        Set<AuthorityGroupEntity> authorityGroupEntities = Mapper.getEntitySet(role.getAuthorityGroups());
+        authorityGroupEntities.forEach(authorityGroupEntity -> authorityGroupEntity.addRole(this));
+        this.setAuthorityGroups(authorityGroupEntities);
+        Set<UserComponentEntity> userComponentEntities = Mapper.getEntitySet(role.getUserComponents());
+        userComponentEntities.forEach(userComponentEntity -> userComponentEntity.addRole(this));
+        this.setUserComponents(userComponentEntities);
     }
 
     public RoleEntity(){}
@@ -52,6 +57,10 @@ public class RoleEntity extends BaseConstantEntity {
         return users;
     }
 
+    public void addUser(UserEntity userEntity){
+        this.users.add(userEntity);
+    }
+
     public Set<UserComponentEntity> getUserComponents() {
         return userComponents;
     }
@@ -59,6 +68,4 @@ public class RoleEntity extends BaseConstantEntity {
     public void setUserComponents(Set<UserComponentEntity> userComponents) {
         this.userComponents = userComponents;
     }
-
-
 }

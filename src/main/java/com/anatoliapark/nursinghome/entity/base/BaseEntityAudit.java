@@ -1,6 +1,5 @@
 package com.anatoliapark.nursinghome.entity.base;
 
-import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.model.base.BaseModel;
 import org.springframework.security.core.Authentication;
@@ -52,19 +51,30 @@ public abstract class BaseEntityAudit extends BaseEntity{
     @PrePersist
     private void setCreationParameters() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        this.createdBy = user.getId();
-        this.createdAt = new Date();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            this.createdBy = -1L;
+            this.updatedBy = -1L;
+        }
+        else{
+            User user = (User) authentication.getPrincipal();
+            this.createdBy = user.getId();
+            this.updatedBy = user.getId();
+        }
 
-        this.updatedBy = user.getId();
+        this.createdAt = new Date();
         this.updatedAt = new Date();
     }
 
     @PreUpdate
     private void setUpdateParameters() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserEntity user = (UserEntity) authentication.getPrincipal();
-        this.updatedBy = user.getId();
+        if(authentication.getPrincipal().equals("anonymousUser")){
+            this.updatedBy = -1L;
+        }
+        else{
+            User user = (User) authentication.getPrincipal();
+            this.updatedBy = user.getId();
+        }
         this.updatedAt = new Date();
     }
 }

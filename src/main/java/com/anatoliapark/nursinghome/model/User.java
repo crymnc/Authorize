@@ -18,7 +18,7 @@ public class User extends BaseModel {
     private String name,lastName,username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    private Boolean isActive;
+    private boolean isActive = true;
     private Date lastActivationDate;
     private Set<Role> roles;
     private Set<UserComponentContent> userComponentContents;

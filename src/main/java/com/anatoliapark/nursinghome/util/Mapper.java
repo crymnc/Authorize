@@ -52,9 +52,9 @@ public class Mapper {
 
     public static <T extends BaseModel> T convertToModel(BaseEntity entity) {
         try {
-            Class<T> modelClass = getModalClass(entity);
+            Class<T> modelClass = getModelClass(entity);
             for(Constructor constructor: modelClass.getConstructors()){
-                if(constructor.getParameterCount() == 1){
+                if(constructor.getParameterCount() == 1 && constructor.getParameterTypes()[0].equals(entity.getClass())){
                     return (T) constructor.newInstance(entity);
                 }
             }
@@ -72,7 +72,7 @@ public class Mapper {
         return null;
     }
 
-    protected static <T extends BaseModel> Class<T> getModalClass(BaseEntity entity){
+    protected static <T extends BaseModel> Class<T> getModelClass(BaseEntity entity){
         Annotation annotation = entity.getClass().getAnnotation(ModelMapping.class);
         if(annotation != null){
             try {
@@ -93,7 +93,7 @@ public class Mapper {
         try {
             Class<T> entityClass = getEntityClass(model);
             for(Constructor constructor: entityClass.getConstructors()){
-                if(constructor.getParameterCount() == 1){
+                if(constructor.getParameterCount() == 1 && constructor.getParameterTypes()[0].equals(model.getClass())){
                     return (T) constructor.newInstance(model);
                 }
             }

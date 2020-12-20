@@ -5,6 +5,7 @@ import com.anatoliapark.nursinghome.entity.UserComponentContentEntity;
 import com.anatoliapark.nursinghome.entity.base.BaseEntityAudit;
 import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.util.Mapper;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 
 @Entity(name = "user")
 @ModelMapping(modelClass = User.class)
+@DynamicUpdate //may causes performance issues
 public class UserEntity extends BaseEntityAudit {
 
     @Column(name = "name")
@@ -31,11 +33,9 @@ public class UserEntity extends BaseEntityAudit {
     private String username;
 
     @Column(name = "password")
-    @NotEmpty(message = "{user.password.NotEmpty}")
-    @Length(min = 5, max = 60, message = "{user.password.Length}")
     private String password;
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "active")
     private boolean active = true;
 
     @Column(name = "last_activation_date")
@@ -47,7 +47,6 @@ public class UserEntity extends BaseEntityAudit {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    @NotEmpty
     private Set<RoleEntity> roles;
 
     @OneToMany(
@@ -65,7 +64,11 @@ public class UserEntity extends BaseEntityAudit {
         this.setName(user.getName());
         this.setLastName(user.getLastName());
         this.setLastActivationDate(user.getLastActivationDate());
-        this.setRoles(Mapper.getEntitySet(user.getRoles()));
+        Set<RoleEntity> roleEntities = Mapper.getEntitySet(user.getRoles());
+        for(RoleEntity roleEntity:roleEntities){
+            roleEntity.addUser(this);
+        }
+        this.setRoles(roleEntities);
         Set<UserComponentContentEntity> userComponentContentEntities = Mapper.getEntitySet(user.getUserComponentContents());
         for(UserComponentContentEntity userComponentContentEntity:userComponentContentEntities){
             userComponentContentEntity.setUser(this);

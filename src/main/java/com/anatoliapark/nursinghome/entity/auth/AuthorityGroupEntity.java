@@ -7,6 +7,7 @@ import com.anatoliapark.nursinghome.util.Mapper;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "authority_group")
@@ -22,11 +23,13 @@ public class AuthorityGroupEntity extends BaseConstantEntity {
     private Set<AuthorityEntity> authorities;
 
     @ManyToMany(mappedBy = "authorityGroups", fetch = FetchType.LAZY)
-    private Set<RoleEntity> roles;
+    private Set<RoleEntity> roles = new HashSet<>();
 
     public AuthorityGroupEntity(AuthorityGroup authorityGroup) {
         super(authorityGroup);
-        this.setAuthorities(Mapper.getEntitySet(authorityGroup.getAuthorities()));
+        Set<AuthorityEntity> authorityEntities = Mapper.getEntitySet(authorityGroup.getAuthorities());
+        authorityEntities.forEach(authorityEntity -> authorityEntity.addAuthorityGroup(this));
+        this.setAuthorities(authorityEntities);
     }
 
     public AuthorityGroupEntity(){}
@@ -41,6 +44,10 @@ public class AuthorityGroupEntity extends BaseConstantEntity {
 
     public Set<RoleEntity> getRoles() {
         return roles;
+    }
+
+    public void addRole(RoleEntity roleEntity){
+        this.roles.add(roleEntity);
     }
 
 }

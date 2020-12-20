@@ -1,7 +1,7 @@
 package com.anatoliapark.nursinghome.controller.rest;
 
 import com.anatoliapark.nursinghome.annotation.RestApiController;
-import com.anatoliapark.nursinghome.entity.auth.RoleEntity;
+import com.anatoliapark.nursinghome.exception.BussinessException;
 import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
 import com.anatoliapark.nursinghome.model.User;
 import com.anatoliapark.nursinghome.repository.base.EntityRepository;
@@ -27,11 +27,11 @@ public class UserController {
     private EntityRepository entityRepository;
 
 
-    @PostMapping("/register")
+    @PostMapping("/save")
     public String registerNewUser(@RequestBody User user){
         User availableUser = userService.findUserByUsername(user.getUsername());
         if(availableUser == null){
-            userService.registerNewUser(user);
+            userService.saveUser(user);
         }
         else{
             throw new UserAlreadyExistException("UserEntity already exists");
@@ -39,14 +39,26 @@ public class UserController {
         return "Success";
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
+    @PutMapping("/save")
+    public String updateUser(@RequestBody User user){
+        User availableUser = userService.findUserByUsername(user.getUsername());
+        if(availableUser != null){
+            userService.saveUser(user);
+        }
+        else{
+            throw new BussinessException("User is not found to update. Firstly, save user");
+        }
+        return "Success";
     }
 
-    @GetMapping("/roles")
-    public List<RoleEntity> getRoles(){
-        return constantService.findAll(RoleEntity.class);
+    @DeleteMapping(params = {"username"})
+    public void deleteUserByUsername(@RequestParam("username") String username){
+        userService.deleteUserByUsername(username);
+    }
+
+    @DeleteMapping(params = {"id"})
+    public void deleteUserById(@RequestParam("id") Long id){
+        userService.deleteUserById(id);
     }
 
     @GetMapping(value = "/users")
