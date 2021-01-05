@@ -1,7 +1,8 @@
 package com.anatoliapark.nursinghome.entity.base;
 
-import com.anatoliapark.nursinghome.model.User;
-import com.anatoliapark.nursinghome.model.base.BaseModel;
+import com.anatoliapark.nursinghome.domain.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -9,6 +10,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
+@Getter
+@Setter
 public abstract class BaseEntityAudit extends BaseEntity{
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -24,29 +27,6 @@ public abstract class BaseEntityAudit extends BaseEntity{
 
     @Column(name = "updated_by", nullable = false)
     protected Long updatedBy;
-
-    public BaseEntityAudit(BaseModel model) {
-        super(model);
-    }
-
-    public BaseEntityAudit(){}
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
-
 
     @PrePersist
     private void setCreationParameters() {

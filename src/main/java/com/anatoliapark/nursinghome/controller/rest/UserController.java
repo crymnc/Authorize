@@ -3,7 +3,7 @@ package com.anatoliapark.nursinghome.controller.rest;
 import com.anatoliapark.nursinghome.annotation.RestApiController;
 import com.anatoliapark.nursinghome.exception.BussinessException;
 import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
-import com.anatoliapark.nursinghome.model.User;
+import com.anatoliapark.nursinghome.domain.User;
 import com.anatoliapark.nursinghome.repository.base.EntityRepository;
 import com.anatoliapark.nursinghome.service.ConstantService;
 import com.anatoliapark.nursinghome.service.UserService;
@@ -41,9 +41,9 @@ public class UserController {
 
     @PutMapping("/save")
     public String updateUser(@RequestBody User user){
-        User availableUser = userService.findUserByUsername(user.getUsername());
+        User availableUser = userService.findUserById(user.getId());
         if(availableUser != null){
-            userService.saveUser(user);
+            userService.updateUser(user);
         }
         else{
             throw new BussinessException("User is not found to update. Firstly, save user");

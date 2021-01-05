@@ -1,17 +1,18 @@
 package com.anatoliapark.nursinghome.entity.auth;
 
-import com.anatoliapark.nursinghome.annotation.ModelMapping;
 import com.anatoliapark.nursinghome.entity.UserComponentEntity;
 import com.anatoliapark.nursinghome.entity.base.BaseConstantEntity;
-import com.anatoliapark.nursinghome.model.Role;
-import com.anatoliapark.nursinghome.util.Mapper;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "role")
-@ModelMapping(modelClass = Role.class)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RoleEntity extends BaseConstantEntity {
 
     @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH,CascadeType.MERGE},fetch = FetchType.EAGER)
@@ -33,39 +34,19 @@ public class RoleEntity extends BaseConstantEntity {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<UserEntity> users = new HashSet<>();
 
-    public RoleEntity(Role role) {
-        super(role);
-        Set<AuthorityGroupEntity> authorityGroupEntities = Mapper.getEntitySet(role.getAuthorityGroups());
-        authorityGroupEntities.forEach(authorityGroupEntity -> authorityGroupEntity.addRole(this));
-        this.setAuthorityGroups(authorityGroupEntities);
-        Set<UserComponentEntity> userComponentEntities = Mapper.getEntitySet(role.getUserComponents());
-        userComponentEntities.forEach(userComponentEntity -> userComponentEntity.addRole(this));
-        this.setUserComponents(userComponentEntities);
-    }
-
-    public RoleEntity(){}
-
-    public Set<AuthorityGroupEntity> getAuthorityGroups() {
-        return authorityGroups;
-    }
-
-    public void setAuthorityGroups(Set<AuthorityGroupEntity> authorityGroups) {
-        this.authorityGroups = authorityGroups;
-    }
-
-    public Set<UserEntity> getUsers() {
-        return users;
+    public void addAuthorityGroup(AuthorityGroupEntity authorityGroupEntity){
+        if(this.getAuthorityGroups() == null)
+            this.setAuthorityGroups(new HashSet<>());
+        this.getAuthorityGroups().add(authorityGroupEntity);
     }
 
     public void addUser(UserEntity userEntity){
         this.users.add(userEntity);
     }
 
-    public Set<UserComponentEntity> getUserComponents() {
-        return userComponents;
-    }
-
-    public void setUserComponents(Set<UserComponentEntity> userComponents) {
-        this.userComponents = userComponents;
+    public void addComponent(UserComponentEntity userComponentEntity){
+        if(this.getUserComponents() == null)
+            this.setUserComponents(new HashSet<>());
+        this.getUserComponents().add(userComponentEntity);
     }
 }

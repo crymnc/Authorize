@@ -1,13 +1,15 @@
 package com.anatoliapark.nursinghome.entity.base;
 
-import com.anatoliapark.nursinghome.model.base.BaseConstantModel;
-import com.anatoliapark.nursinghome.model.base.BaseModel;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotEmpty;
 
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class BaseConstantEntity extends BaseEntityAudit{
 
@@ -20,28 +22,4 @@ public abstract class BaseConstantEntity extends BaseEntityAudit{
     @Length(max = 255, message = "{constantEntity.desc.Length}")
     protected String dsc;
 
-    public BaseConstantEntity(BaseModel model) {
-        super(model);
-        BaseConstantModel baseConstantModel = (BaseConstantModel) model;
-        this.setName(baseConstantModel.getName());
-        this.setDsc(baseConstantModel.getDescription());
-    }
-
-    public BaseConstantEntity(){}
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDsc() {
-        return dsc;
-    }
-
-    public void setDsc(String dsc) {
-        this.dsc = dsc;
-    }
 }

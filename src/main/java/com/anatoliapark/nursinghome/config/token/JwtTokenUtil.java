@@ -1,7 +1,7 @@
 package com.anatoliapark.nursinghome.config.token;
 
 
-import com.anatoliapark.nursinghome.model.User;
+import com.anatoliapark.nursinghome.domain.User;
 import com.anatoliapark.nursinghome.util.Constants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

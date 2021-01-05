@@ -11,7 +11,7 @@ public class ConstantService<T extends BaseConstantEntity> extends EntityService
     public T find(String name, Class<T> c) {
         T instance = createInstance(c);
         instance.setName(name);
-        return entityRepository.findOne(Example.of(instance));
+        return entityRepository.findOne(Example.of(instance)).get();
     }
 
 }

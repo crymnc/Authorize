@@ -1,10 +1,11 @@
 package com.anatoliapark.nursinghome.entity.webpage;
 
-import com.anatoliapark.nursinghome.annotation.ModelMapping;
 import com.anatoliapark.nursinghome.entity.auth.AuthorityOptionEntity;
 import com.anatoliapark.nursinghome.entity.base.BaseConstantEntity;
-import com.anatoliapark.nursinghome.model.WebPage;
-import com.anatoliapark.nursinghome.model.base.BaseModel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,7 +15,10 @@ import java.util.Collection;
 
 @Entity
 @Table(name="webpage")
-@ModelMapping(modelClass = WebPage.class)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class WebPageEntity extends BaseConstantEntity {
 
     @OneToMany(
@@ -30,27 +34,4 @@ public class WebPageEntity extends BaseConstantEntity {
             cascade=CascadeType.REMOVE
     )
     private Collection<AuthorityOptionEntity> authorityOptions;
-
-    public WebPageEntity(BaseModel model) {
-        super(model);
-    }
-
-    public WebPageEntity(){}
-
-    public Collection<WebPageComponentEntity> getWebPageComponents() {
-        return webPageComponents;
-    }
-
-    public void setWebPageComponents(Collection<WebPageComponentEntity> webPageComponents) {
-        this.webPageComponents = webPageComponents;
-    }
-
-    public Collection<AuthorityOptionEntity> getAuthorityOptions() {
-        return authorityOptions;
-    }
-
-    public void setAuthorityOptions(Collection<AuthorityOptionEntity> authorityOptions) {
-        this.authorityOptions = authorityOptions;
-    }
-
 }

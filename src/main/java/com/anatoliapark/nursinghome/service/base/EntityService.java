@@ -27,7 +27,7 @@ public class EntityService<T extends BaseEntity> extends BaseService{
         T instance = createInstance(c);
         instance.setId(id);
         if(id != null)
-            return entityRepository.findOne(Example.of(instance, matcher));
+            return entityRepository.findOne(Example.of(instance, matcher)).get();
         return null;
     }
 
