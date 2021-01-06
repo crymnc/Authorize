@@ -2,12 +2,10 @@ package com.anatoliapark.nursinghome.controller.rest;
 
 import com.anatoliapark.nursinghome.annotation.RestApiController;
 import com.anatoliapark.nursinghome.config.token.JwtTokenUtil;
-import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.domain.Token;
 import com.anatoliapark.nursinghome.domain.User;
-import com.anatoliapark.nursinghome.service.ConstantService;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,17 +18,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private ConstantService constantService;
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, UserService userService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userService = userService;
+    }
 
     @PostMapping(value = "/authenticate")
     public @ResponseBody Token authenticate(@RequestBody UserEntity loginUser) throws AuthenticationException {

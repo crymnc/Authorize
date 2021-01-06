@@ -1,51 +1,56 @@
 package com.anatoliapark.nursinghome.service;
 
 import com.anatoliapark.nursinghome.domain.User;
+import com.anatoliapark.nursinghome.entity.UserComponentContentEntity;
 import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.mapper.UserMapper;
 import com.anatoliapark.nursinghome.repository.UserRepository;
-import com.anatoliapark.nursinghome.repository.base.EntityRepository;
 import com.anatoliapark.nursinghome.service.base.EntityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
-public class UserService extends EntityService<UserEntity> {
+public class UserService extends EntityService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private EntityRepository entityRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    @Autowired
-    private UserMapper userMapper;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
+    }
 
 
-    @Transactional
     public User saveUser(User newUser){
         if(newUser.getPassword() != null)
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-
-        return null;
+        UserEntity newUserEntity = userMapper.toEntity(newUser);
+        Set<UserComponentContentEntity> userComponentContentEntitySet = new HashSet<>();
+        newUserEntity.getUserComponentContents().stream().forEach(newUserComponentContentEntity -> {
+            newUserComponentContentEntity.setUser(newUserEntity);
+            userComponentContentEntitySet.add(newUserComponentContentEntity);
+        });
+        newUserEntity.setUserComponentContents(userComponentContentEntitySet);
+        UserEntity savedUserEntity = userRepository.save(newUserEntity);
+        return userMapper.toDomain(savedUserEntity);
     }
 
     @Transactional
     public User updateUser(User newUser){
         UserEntity oldUser = userRepository.findById(newUser.getId()).get();
         UserEntity savedUserEntity = userRepository.save(oldUser);
-        return null;
+        return userMapper.toDomain(savedUserEntity);
     }
 
     public void deleteUserById(Long id){
@@ -82,9 +87,8 @@ public class UserService extends EntityService<UserEntity> {
     }
 
     public List<User> findAllUsers(){
-        List<UserEntity> userEntities = entityRepository.findAll(Example.of(new UserEntity()));
-        List<User> users = new ArrayList<>();
-        userEntities.stream().forEach(userEntity -> users.add(userMapper.toDomain(userEntity)));
+        List<UserEntity> userEntities = findAll(UserEntity.class);
+        List<User> users = userMapper.toDomainList(userEntities);
         return users;
     }
 }

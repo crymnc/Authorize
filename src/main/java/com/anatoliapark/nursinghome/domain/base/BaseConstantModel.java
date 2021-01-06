@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class BaseConstantModel extends BaseModel {
-    private String name, description;
+    private String name, dsc;
 }
