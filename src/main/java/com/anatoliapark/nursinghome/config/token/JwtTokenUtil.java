@@ -1,7 +1,7 @@
 package com.anatoliapark.nursinghome.config.token;
 
 
-import com.anatoliapark.nursinghome.domain.User;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.util.Constants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -42,11 +42,11 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(User user) {
+    public String generateToken(UserEntity user) {
         return doGenerateToken(user);
     }
 
-    private String doGenerateToken(User user) {
+    private String doGenerateToken(UserEntity user) {
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         List<SimpleGrantedAuthority> auths =  user.getAuthority();
@@ -61,7 +61,7 @@ public class JwtTokenUtil implements Serializable {
                 .compact();
     }
 
-    public Boolean validateToken(String token, User user) {
+    public Boolean validateToken(String token, UserEntity user) {
         final String username = getUsernameFromToken(token);
 
         return user != null

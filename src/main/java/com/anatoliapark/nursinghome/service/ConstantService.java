@@ -6,12 +6,12 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ConstantService<T extends BaseConstantEntity> extends EntityService<T> {
+public class ConstantService extends EntityService {
 
-    public T find(String name, Class<T> c) {
+    public <T extends BaseConstantEntity> T find(String name, Class<T> c) {
         T instance = createInstance(c);
         instance.setName(name);
-        return entityRepository.findOne(Example.of(instance)).get();
+        return (T)entityRepository.findOne(Example.of(instance)).get();
     }
 
 }

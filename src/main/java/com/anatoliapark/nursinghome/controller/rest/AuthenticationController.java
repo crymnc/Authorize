@@ -3,7 +3,6 @@ package com.anatoliapark.nursinghome.controller.rest;
 import com.anatoliapark.nursinghome.annotation.RestApiController;
 import com.anatoliapark.nursinghome.config.token.JwtTokenUtil;
 import com.anatoliapark.nursinghome.domain.Token;
-import com.anatoliapark.nursinghome.domain.User;
 import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,7 +33,7 @@ public class AuthenticationController {
     public @ResponseBody Token authenticate(@RequestBody UserEntity loginUser) throws AuthenticationException {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
-        User user = userService.findUserByUsername(loginUser.getUsername());
+        UserEntity user = userService.findUserByUsername(loginUser.getUsername());
         Token token = new Token();
         token.setUsername(user.getUsername());
         token.setName(user.getName());

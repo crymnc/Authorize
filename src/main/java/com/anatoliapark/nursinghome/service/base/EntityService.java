@@ -11,32 +11,32 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EntityService<T extends BaseEntity> extends BaseService{
+public class EntityService extends BaseService{
 
     @Autowired
-    protected EntityRepository<T> entityRepository;
+    protected EntityRepository entityRepository;
 
-    public T save(BaseConstantEntity constantEntity) {
+    public <T extends BaseEntity> T save(BaseConstantEntity constantEntity) {
         if(constantEntity != null)
-            return entityRepository.save((T)constantEntity);
+            return (T)entityRepository.save(constantEntity);
         return null;
     }
 
-    public T find(Long id, Class<T> c) {
+    public <T extends BaseEntity> T find(Long id, Class<T> c) {
         ExampleMatcher matcher = ExampleMatcher.matchingAll();
         T instance = createInstance(c);
         instance.setId(id);
         if(id != null)
-            return entityRepository.findOne(Example.of(instance, matcher)).get();
+            return (T)entityRepository.findOne(Example.of(instance, matcher)).get();
         return null;
     }
 
-    public List<T> findAll(Class<T> c) {
+    public <T extends BaseEntity> List<T> findAll(Class<T> c) {
         T instance = createInstance(c);
         return entityRepository.findAll(Example.of(instance));
     }
 
-    public void delete(Long id, Class<T> c){
+    public <T extends BaseEntity> void delete(Long id, Class<T> c){
         T instance = createInstance(c);
         instance.setId(id);
         entityRepository.delete(instance);

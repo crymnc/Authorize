@@ -1,6 +1,6 @@
 package com.anatoliapark.nursinghome.config;
 
-import com.anatoliapark.nursinghome.domain.User;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findUserByUsername(username);
+        UserEntity user = userService.findUserByUsername(username);
         if(user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }

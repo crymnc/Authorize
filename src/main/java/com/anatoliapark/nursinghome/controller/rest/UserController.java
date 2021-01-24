@@ -1,13 +1,14 @@
 package com.anatoliapark.nursinghome.controller.rest;
 
 import com.anatoliapark.nursinghome.annotation.RestApiController;
+import com.anatoliapark.nursinghome.domain.User;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.exception.BussinessException;
 import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
-import com.anatoliapark.nursinghome.domain.User;
-import com.anatoliapark.nursinghome.repository.base.EntityRepository;
+import com.anatoliapark.nursinghome.manager.UserManager;
+import com.anatoliapark.nursinghome.mapper.UserMapper;
 import com.anatoliapark.nursinghome.service.ConstantService;
 import com.anatoliapark.nursinghome.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,21 +18,27 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private ConstantService constantService;
+    private final ConstantService constantService;
 
-    @Autowired
-    private EntityRepository entityRepository;
+    private final UserManager userManager;
+
+    private final UserMapper userMapper;
+
+    public UserController(UserService userService, ConstantService constantService, UserManager userManager, UserMapper userMapper) {
+        this.userService = userService;
+        this.constantService = constantService;
+        this.userManager = userManager;
+        this.userMapper = userMapper;
+    }
 
 
     @PostMapping("/save")
     public String registerNewUser(@RequestBody User user){
-        User availableUser = userService.findUserByUsername(user.getUsername());
+        UserEntity availableUser = userService.findUserByUsername(user.getUsername());
         if(availableUser == null){
-            userService.saveUser(user);
+            userService.saveUser(userMapper.toEntity(user));
         }
         else{
             throw new UserAlreadyExistException("UserEntity already exists");
@@ -41,9 +48,10 @@ public class UserController {
 
     @PutMapping("/save")
     public String updateUser(@RequestBody User user){
-        User availableUser = userService.findUserById(user.getId());
+        UserEntity availableUser = userService.findUserById(user.getId());
         if(availableUser != null){
-            userService.updateUser(user);
+            userManager.getUpdatedUserEntity(availableUser,user);
+            userService.updateUser(availableUser);
         }
         else{
             throw new BussinessException("User is not found to update. Firstly, save user");
@@ -63,6 +71,6 @@ public class UserController {
 
     @GetMapping(value = "/users")
     public List<User> getUsers() {
-        return userService.findAllUsers();
+        return userMapper.toDomainList(userService.findAllUsers());
     }
 }

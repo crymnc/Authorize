@@ -1,6 +1,6 @@
 package com.anatoliapark.nursinghome.entity.base;
 
-import com.anatoliapark.nursinghome.domain.User;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
@@ -36,7 +36,7 @@ public abstract class BaseEntityAudit extends BaseEntity{
             this.updatedBy = -1L;
         }
         else{
-            User user = (User) authentication.getPrincipal();
+            UserEntity user = (UserEntity) authentication.getPrincipal();
             this.createdBy = user.getId();
             this.updatedBy = user.getId();
         }
@@ -52,7 +52,7 @@ public abstract class BaseEntityAudit extends BaseEntity{
             this.updatedBy = -1L;
         }
         else{
-            User user = (User) authentication.getPrincipal();
+            UserEntity user = (UserEntity) authentication.getPrincipal();
             this.updatedBy = user.getId();
         }
         this.updatedAt = new Date();

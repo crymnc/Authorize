@@ -8,12 +8,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity(name = "user")
@@ -71,5 +74,9 @@ public class UserEntity extends BaseEntityAudit {
         if(this.getUserComponentContents() == null)
             this.setUserComponentContents(new HashSet<>());
         this.getUserComponentContents().add(userComponentContentEntity);
+    }
+
+    public List<SimpleGrantedAuthority> getAuthority() {
+        return getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_"+role.getName())).collect(Collectors.toList());
     }
 }

@@ -1,6 +1,6 @@
 package com.anatoliapark.nursinghome.config.token;
 
-import com.anatoliapark.nursinghome.domain.User;
+import com.anatoliapark.nursinghome.entity.auth.UserEntity;
 import com.anatoliapark.nursinghome.service.UserService;
 import com.anatoliapark.nursinghome.util.Constants;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            User user = userService.findUserByUsername(username);
+            UserEntity user = userService.findUserByUsername(username);
 
             if (jwtTokenUtil.validateToken(authToken, user)) {
                 List<SimpleGrantedAuthority> auths = user.getAuthority();
