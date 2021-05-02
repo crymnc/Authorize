@@ -31,7 +31,7 @@ public abstract class BaseEntityAudit extends BaseEntity{
     @PrePersist
     private void setCreationParameters() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getPrincipal().equals("anonymousUser")){
+        if(authentication == null || authentication.getPrincipal().equals("anonymousUser")){
             this.createdBy = -1L;
             this.updatedBy = -1L;
         }

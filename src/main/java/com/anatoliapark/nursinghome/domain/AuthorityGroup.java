@@ -1,6 +1,7 @@
 package com.anatoliapark.nursinghome.domain;
 
 import com.anatoliapark.nursinghome.domain.base.BaseConstantModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorityGroup extends BaseConstantModel {
-    private List<Authority> authorities;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Long> authorities;
 }

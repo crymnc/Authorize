@@ -9,10 +9,10 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EntityService extends BaseService{
-
     @Autowired
     protected EntityRepository entityRepository;
 
@@ -22,12 +22,12 @@ public class EntityService extends BaseService{
         return null;
     }
 
-    public <T extends BaseEntity> T find(Long id, Class<T> c) {
+    public <T extends BaseEntity> Optional<T> find(Long id, Class<T> c) {
         ExampleMatcher matcher = ExampleMatcher.matchingAll();
         T instance = createInstance(c);
         instance.setId(id);
         if(id != null)
-            return (T)entityRepository.findOne(Example.of(instance, matcher)).get();
+            return entityRepository.findOne(Example.of(instance, matcher));
         return null;
     }
 

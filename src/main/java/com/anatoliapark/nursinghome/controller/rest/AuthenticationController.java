@@ -4,6 +4,7 @@ import com.anatoliapark.nursinghome.annotation.RestApiController;
 import com.anatoliapark.nursinghome.config.token.JwtTokenUtil;
 import com.anatoliapark.nursinghome.domain.Token;
 import com.anatoliapark.nursinghome.entity.auth.UserEntity;
+import com.anatoliapark.nursinghome.exception.BussinessException;
 import com.anatoliapark.nursinghome.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,10 +31,10 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/authenticate")
-    public @ResponseBody Token authenticate(@RequestBody UserEntity loginUser) throws AuthenticationException {
-        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
+    public @ResponseBody Token authenticate(@RequestHeader("username") String username, @RequestHeader("password") String password) throws AuthenticationException {
+        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         SecurityContextHolder.getContext().setAuthentication(auth);
-        UserEntity user = userService.findUserByUsername(loginUser.getUsername());
+        UserEntity user = userService.findUserByUsername(username).orElseThrow(() -> new BussinessException("User not found"));
         Token token = new Token();
         token.setUsername(user.getUsername());
         token.setName(user.getName());

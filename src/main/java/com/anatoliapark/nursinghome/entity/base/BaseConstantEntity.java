@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class BaseConstantEntity extends BaseEntityAudit{
+public class BaseConstantEntity extends BaseEntityAudit{
 
     @Column(name="name")
     @NotEmpty(message = "{constantEntity.name.NotEmpty}")

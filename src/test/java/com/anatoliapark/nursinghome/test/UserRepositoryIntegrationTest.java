@@ -63,8 +63,8 @@ public class UserRepositoryIntegrationTest {
         authorityGroupEntity.addRole(roleEntity);
         roleEntity.addAuthorityGroup(authorityGroupEntity);
 
-        Mockito.when(entityService.find(1L,RoleEntity.class)).thenReturn(roleEntity);
-        Mockito.when( entityService.find(1L,UserComponentEntity.class)).thenReturn(userComponentEntity);
+        Mockito.when(entityService.find(1L,RoleEntity.class).get()).thenReturn(roleEntity);
+        Mockito.when( entityService.find(1L,UserComponentEntity.class).get()).thenReturn(userComponentEntity);
     }
 
     @Test
@@ -74,9 +74,9 @@ public class UserRepositoryIntegrationTest {
         userEntity.setLastName("TLastName");
         userEntity.setUsername("TUsername");
         userEntity.setPassword("TPass");
-        RoleEntity roleEntity = (RoleEntity) entityService.find(1L, RoleEntity.class);
+        RoleEntity roleEntity = entityService.find(1L, RoleEntity.class).get();
         userEntity.addRole(roleEntity);
-        UserComponentEntity userComponentEntity = (UserComponentEntity) entityService.find(1L,UserComponentEntity.class);
+        UserComponentEntity userComponentEntity = entityService.find(1L,UserComponentEntity.class).get();
         UserComponentContentEntity userComponentContentEntity = new UserComponentContentEntity();
         userComponentContentEntity.setComponent(userComponentEntity);
         userComponentContentEntity.setUser(userEntity);

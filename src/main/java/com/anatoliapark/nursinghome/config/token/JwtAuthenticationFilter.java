@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserEntity user = userService.findUserByUsername(username);
+            UserEntity user = userService.findUserByUsername(username).get();
 
             if (jwtTokenUtil.validateToken(authToken, user)) {
                 List<SimpleGrantedAuthority> auths = user.getAuthority();
