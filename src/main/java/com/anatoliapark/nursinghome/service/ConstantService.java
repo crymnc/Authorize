@@ -9,7 +9,8 @@ import com.anatoliapark.nursinghome.entity.base.BaseConstantEntity;
 import com.anatoliapark.nursinghome.entity.webpage.WebPageComponentEntity;
 import com.anatoliapark.nursinghome.entity.webpage.WebPageComponentTypeEntity;
 import com.anatoliapark.nursinghome.entity.webpage.WebPageEntity;
-import com.anatoliapark.nursinghome.exception.BussinessException;
+import com.anatoliapark.nursinghome.exception.BusinessException;
+import com.anatoliapark.nursinghome.exception.BusinessExceptions;
 import com.anatoliapark.nursinghome.mapper.ConstantMapper;
 import com.anatoliapark.nursinghome.service.base.EntityService;
 import com.anatoliapark.nursinghome.util.ReflectionUtils;
@@ -54,7 +55,7 @@ public class ConstantService extends EntityService {
                     .map(constantEntity -> constantMapper.toModel(constantEntity))
                     .collect(Collectors.toList());
         }
-        throw new BussinessException("Constant name is not acceptable");
+        throw BusinessExceptions.CONSTANT_NAME_IS_NOT_ACCEPTABLE;
     }
 
     public void deleteByConstantNameAndId(String constantName, Long id) {
@@ -65,34 +66,34 @@ public class ConstantService extends EntityService {
 
     public <T extends BaseConstantEntity> T saveByConstantName(String constantName, BaseConstantModel constantModel) {
         if(constantModel.getId() != null)
-            throw new BussinessException("If id field is not null, try to update "+constantName);
+            throw new BusinessException("If id field is not null, try to update "+constantName);
         if(constantMap.containsKey(constantName)){
             return save(constantMapper.toEntity(constantModel,constantMap.get(constantName)));
         }else{
-            throw new BussinessException("Constant name is not acceptable");
+            throw BusinessExceptions.CONSTANT_NAME_IS_NOT_ACCEPTABLE;
         }
     }
 
     public <T extends BaseConstantEntity> T updateByConstantName(String constantName, BaseConstantModel constantModel) {
         if(constantModel.getId() == null)
-            throw new BussinessException("If id field is null, try to create "+constantName);
+            throw new BusinessException("If id field is null, try to create "+constantName);
         if(constantMap.containsKey(constantName)){
             return save(constantMapper.toEntity(constantModel,constantMap.get(constantName)));
         }else{
-            throw new BussinessException("Constant name is not acceptable");
+            throw BusinessExceptions.CONSTANT_NAME_IS_NOT_ACCEPTABLE;
         }
     }
 
     public void addSubConstantToMain(String mainConstantName, Long mainConstantId, String subConstantName, Long subConstantId){
         Field subField = ReflectionUtils.findSubField(constantMap.get(mainConstantName), constantMap.get(subConstantName));
         if (subField == null)
-            throw new BussinessException(mainConstantName + " do not have " + subConstantName + " field");
+            throw new BusinessException(mainConstantName + " do not have " + subConstantName + " field");
 
-        BaseConstantEntity toEntity = find(mainConstantId,constantMap.get(mainConstantName)).orElseThrow(() -> new BussinessException(mainConstantName+" is not found with given id"));
+        BaseConstantEntity toEntity = find(mainConstantId,constantMap.get(mainConstantName)).orElseThrow(() -> new BusinessException(mainConstantName+" is not found with given id"));
         try {
             subField.setAccessible(true);
             Set set = (Set)subField.get(toEntity);
-            set.add(find(subConstantId,constantMap.get(subConstantName)).orElseThrow(() -> new BussinessException(subConstantName+" is not found with given id")));
+            set.add(find(subConstantId,constantMap.get(subConstantName)).orElseThrow(() -> new BusinessException(subConstantName+" is not found with given id")));
             save(toEntity);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -102,18 +103,15 @@ public class ConstantService extends EntityService {
     public void removeSubConstantFromMain(String mainConstantName, Long mainConstantId, String subConstantName, Long subConstantId){
         Field subField = ReflectionUtils.findSubField(constantMap.get(mainConstantName), constantMap.get(subConstantName));
         if (subField == null)
-            throw new BussinessException(mainConstantName + " do not have " + subConstantName + " field");
-        BaseConstantEntity mainEntity = find(mainConstantId,constantMap.get(mainConstantName)).orElseThrow(() -> new BussinessException(mainConstantName+" is not found with given id"));
+            throw new BusinessException(mainConstantName + " do not have " + subConstantName + " field");
+        BaseConstantEntity mainEntity = find(mainConstantId,constantMap.get(mainConstantName)).orElseThrow(() -> new BusinessException(mainConstantName+" is not found with given id"));
         try {
             subField.setAccessible(true);
             Set set = (Set)subField.get(mainEntity);
-            set.remove(find(subConstantId,constantMap.get(subConstantName)).orElseThrow(() -> new BussinessException(subConstantName+" is not found with given id")));
+            set.remove(find(subConstantId,constantMap.get(subConstantName)).orElseThrow(() -> new BusinessException(subConstantName+" is not found with given id")));
             save(mainEntity);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
-
-
-
 }

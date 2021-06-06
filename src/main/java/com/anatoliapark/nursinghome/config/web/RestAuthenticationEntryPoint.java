@@ -1,5 +1,6 @@
 package com.anatoliapark.nursinghome.config.web;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,12 @@ public final class RestAuthenticationEntryPoint implements AuthenticationEntryPo
         final HttpServletRequest request, 
         final HttpServletResponse response, 
         final AuthenticationException authException) throws IOException {
-        
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Username or password is wrong");
+        if (request.getAttribute("exception") != null) {
+            ExpiredJwtException ex = (ExpiredJwtException) request.getAttribute("exception");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Username or password is wrong");
+        }
     }
 
 }

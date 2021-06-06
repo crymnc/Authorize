@@ -11,6 +11,7 @@ public interface UserComponentContentMapper {
 
     @Mappings({
             @Mapping(target = "componentId", source = "userComponentContentEntity.component.id"),
+            @Mapping(target = "componentName", source = "userComponentContentEntity.component.name"),
             @Mapping(target = "userId", source = "userComponentContentEntity.user.id")
     })
     UserComponentContent toDomain(UserComponentContentEntity userComponentContentEntity);

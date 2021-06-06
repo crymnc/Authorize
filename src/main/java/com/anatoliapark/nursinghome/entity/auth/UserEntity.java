@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Entity(name = "user")
 @Getter
-@Setter()
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate

@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class UserComponentContent extends BaseModel {
     private String content;
     private Long componentId;
+    private String componentName;
     private Long userId;
 }

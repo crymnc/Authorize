@@ -44,7 +44,7 @@ public class UserController {
         userService.deleteUserById(id);
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping
     public List<User> getUsers() {
         return userMapper.toDomainList(userService.findAllUsers());
     }

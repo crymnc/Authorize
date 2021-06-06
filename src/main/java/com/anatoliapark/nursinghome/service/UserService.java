@@ -5,8 +5,7 @@ import com.anatoliapark.nursinghome.entity.UserComponentContentEntity;
 import com.anatoliapark.nursinghome.entity.UserComponentEntity;
 import com.anatoliapark.nursinghome.entity.auth.RoleEntity;
 import com.anatoliapark.nursinghome.entity.auth.UserEntity;
-import com.anatoliapark.nursinghome.exception.BussinessException;
-import com.anatoliapark.nursinghome.exception.UserAlreadyExistException;
+import com.anatoliapark.nursinghome.exception.BusinessExceptions;
 import com.anatoliapark.nursinghome.repository.UserRepository;
 import com.anatoliapark.nursinghome.service.base.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class UserService extends EntityService {
 
     @Transactional
     public UserEntity saveUser(UserEntity newUser){
-        findUserByUsername(newUser.getUsername()).orElseThrow(() -> new UserAlreadyExistException("UserEntity already exists"));
+        findUserByUsername(newUser.getUsername()).ifPresent(userEntity -> {throw BusinessExceptions.USER_ALREADY_EXISTS;});
         if(newUser.getPassword() != null)
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         UserEntity savedUserEntity = userRepository.save(newUser);
@@ -42,7 +41,7 @@ public class UserService extends EntityService {
 
     @Transactional
     public UserEntity updateUser(User newUser){
-        UserEntity availableUserEntity = findUserById(newUser.getId()).orElseThrow(() -> new BussinessException("User is not found to update. Firstly, save user"));
+        UserEntity availableUserEntity = findUserById(newUser.getId()).orElseThrow(() -> BusinessExceptions.USER_NOT_FOUND);
         prepareToUpdate(availableUserEntity,newUser);
         UserEntity savedUserEntity = userRepository.save(availableUserEntity);
         return savedUserEntity;

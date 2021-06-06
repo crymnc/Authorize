@@ -1,4 +1,4 @@
-package com.anatoliapark.nursinghome.domain;
+package com.anatoliapark.nursinghome.config.token;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
