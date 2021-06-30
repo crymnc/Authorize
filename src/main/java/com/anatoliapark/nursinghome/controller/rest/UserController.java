@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*" , methods = {RequestMethod.POST,RequestMethod.GET}, maxAge = 3600)
 @RestApiController
 @RequestMapping("/api/user")
 public class UserController {

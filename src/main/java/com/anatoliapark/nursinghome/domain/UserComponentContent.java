@@ -14,3 +14,5 @@ public class UserComponentContent extends BaseModel {
     private String componentName;
     private Long userId;
 }
+
+

@@ -17,6 +17,7 @@ import com.anatoliapark.nursinghome.util.ReflectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -113,5 +114,23 @@ public class ConstantService extends EntityService {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public List getAllSubConstantName(String mainConstantName, Long mainConstantId, String subConstantName){
+        Field subField = ReflectionUtils.findSubField(constantMap.get(mainConstantName), constantMap.get(subConstantName));
+        if (subField == null)
+            throw new BusinessException(mainConstantName + " do not have " + subConstantName + " field");
+        BaseConstantEntity mainEntity = find(mainConstantId,constantMap.get(mainConstantName)).orElseThrow(() -> new BusinessException(mainConstantName+" is not found with given id"));
+        try {
+            subField.setAccessible(true);
+            Set subFieldValue = (Set)subField.get(mainEntity);
+            if(!CollectionUtils.isEmpty(subFieldValue)){
+                return (List) subFieldValue.stream().map(o -> constantMapper.toModel((BaseConstantEntity)o)).collect(Collectors.toList());
+            }
+            return null;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

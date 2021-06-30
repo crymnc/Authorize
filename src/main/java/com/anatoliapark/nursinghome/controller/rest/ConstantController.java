@@ -60,7 +60,11 @@ public class ConstantController {
         return "Success";
     }
 
-
-
+    @GetMapping("{mainname}/{mainid}/{subname}")
+    public List getSubConstants(@PathVariable(name = "subname") String subConstantName,
+                               @PathVariable(name = "mainname") String mainConstantName,
+                               @PathVariable(name = "mainid") Long mainConstantId) {
+        return constantService.getAllSubConstantName(mainConstantName,mainConstantId,subConstantName);
+    }
 
 }
