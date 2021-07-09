@@ -1,8 +1,5 @@
 package com.experiment.authorize.config.oauth;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,18 +16,15 @@ import javax.sql.DataSource;
 public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
 
     private final AuthenticationManager authenticationManager;
-
     private final UserDetailsService userService;
+    private final JwtAccessTokenConverter jwtAccessTokenConverter;
+    private final DataSource dataSource;
 
-    @Autowired
-    private DataSource dataSource;
-
-    @Value("${jwt.signing-key:JQTFbBIUE}")
-    private String jwtSigningKey;
-
-    public OAuthConfiguration(AuthenticationManager authenticationManager, UserDetailsService userService) {
+    public OAuthConfiguration(AuthenticationManager authenticationManager, UserDetailsService userService, JwtAccessTokenConverter jwtAccessTokenConverter, DataSource dataSource) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
+        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
+        this.dataSource = dataSource;
     }
 
     @Override
@@ -41,15 +35,9 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                .accessTokenConverter(accessTokenConverter())
+                .accessTokenConverter(jwtAccessTokenConverter)
                 .userDetailsService(userService)
                 .authenticationManager(authenticationManager);
     }
 
-    @Bean
-    JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(jwtSigningKey);
-        return converter;
-    }
 }

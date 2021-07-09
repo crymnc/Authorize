@@ -1,7 +1,6 @@
 package com.experiment.authorize.entity.base;
 
 import com.experiment.authorize.entity.auth.UserEntity;
-import com.experiment.authorize.service.UserService;
 import com.experiment.authorize.util.OAuthUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,15 +31,14 @@ public abstract class BaseEntityAudit extends BaseEntity{
 
     @PrePersist
     private void setCreationParameters() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || authentication.getPrincipal().equals("anonymousUser")){
+        Long userId = OAuthUtils.getUserIdFromAuthentication();
+        if(userId == null){
             this.createdBy = -1L;
             this.updatedBy = -1L;
         }
         else{
-            UserEntity user = (UserEntity) authentication.getPrincipal();
-            this.createdBy = user.getId();
-            this.updatedBy = user.getId();
+            this.createdBy = userId;
+            this.updatedBy = userId;
         }
 
         this.createdAt = new Date();
