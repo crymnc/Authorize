@@ -23,24 +23,27 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public String registerNewUser(@RequestBody User user){
         userService.saveUser(userMapper.toEntity(user));
         return "Success";
     }
 
-    @PutMapping("/save")
+    @PutMapping
+    @PreAuthorize("hasAuthority('ADMIN') || authentication.principal")
     public String updateUser(@RequestBody User user){
         userService.updateUser(user);
         return "Success";
     }
 
     @DeleteMapping(params = {"username"})
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteUserByUsername(@RequestParam("username") String username){
         userService.deleteUserByUsername(username);
     }
 
     @DeleteMapping(params = {"id"})
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteUserById(@RequestParam("id") Long id){
         userService.deleteUserById(id);
     }
