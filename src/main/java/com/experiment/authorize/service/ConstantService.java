@@ -15,6 +15,7 @@ import com.experiment.authorize.mapper.ConstantMapper;
 import com.experiment.authorize.service.base.EntityService;
 import com.experiment.authorize.util.ReflectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -43,12 +44,14 @@ public class ConstantService extends EntityService {
         constantMap.put("webpage",WebPageEntity.class);
     }
 
+    @Cacheable(value ="findReference", key="#name + #c.getName()")
     public <T extends BaseConstantEntity> T find(String name, Class<T> c) {
         T instance = createInstance(c);
         instance.setName(name);
         return (T) entityRepository.findOne(Example.of(instance)).get();
     }
 
+    @Cacheable(value ="findReferenceByName", key="#constantName")
     public List findAllByConstantName(String constantName) {
         if (constantMap.containsKey(constantName)) {
             return findAll(constantMap.get(constantName))
@@ -116,6 +119,7 @@ public class ConstantService extends EntityService {
         }
     }
 
+    @Cacheable(value ="getAllSubConstantName", key="#mainConstantName+#mainConstantId+#subConstantName")
     public List getAllSubConstantName(String mainConstantName, Long mainConstantId, String subConstantName){
         Field subField = ReflectionUtils.findSubField(constantMap.get(mainConstantName), constantMap.get(subConstantName));
         if (subField == null)

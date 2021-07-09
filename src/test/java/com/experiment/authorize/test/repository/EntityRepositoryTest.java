@@ -41,9 +41,9 @@ public class EntityRepositoryTest {
             entityRepository.save(new RoleEntity());
         });
 
-        String message = "Validation failed for classes [com.anatoliapark.nursinghome.entity.auth.RoleEntity] during persist time for groups [javax.validation.groups.Default, ]\n" +
+        String message = "Validation failed for classes [com.experiment.authorize.entity.auth.RoleEntity] during persist time for groups [javax.validation.groups.Default, ]\n" +
                 "List of constraint violations:[\n" +
-                "\tConstraintViolationImpl{interpolatedMessage='{constantEntity.name.NotEmpty}', propertyPath=name, rootBeanClass=class com.anatoliapark.nursinghome.entity.auth.RoleEntity, messageTemplate='{constantEntity.name.NotEmpty}'}\n" +
+                "\tConstraintViolationImpl{interpolatedMessage='{constantEntity.name.NotEmpty}', propertyPath=name, rootBeanClass=class com.experiment.authorize.entity.auth.RoleEntity, messageTemplate='{constantEntity.name.NotEmpty}'}\n" +
                 "]";
         assertSame(message,((TransactionSystemException) exception).getRootCause().getLocalizedMessage());
         assertTrue(((TransactionSystemException) exception).getRootCause().getClass().equals(ConstraintViolationException.class));
