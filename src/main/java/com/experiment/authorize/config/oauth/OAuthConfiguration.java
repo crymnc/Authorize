@@ -1,8 +1,8 @@
 package com.experiment.authorize.config.oauth;
 
+import com.experiment.authorize.config.CustomUserDetailsService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -16,13 +16,13 @@ import javax.sql.DataSource;
 public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
 
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userService;
+    private final CustomUserDetailsService customUserDetailsService;
     private final JwtAccessTokenConverter jwtAccessTokenConverter;
     private final DataSource dataSource;
 
-    public OAuthConfiguration(AuthenticationManager authenticationManager, UserDetailsService userService, JwtAccessTokenConverter jwtAccessTokenConverter, DataSource dataSource) {
+    public OAuthConfiguration(AuthenticationManager authenticationManager, CustomUserDetailsService customUserDetailsService, JwtAccessTokenConverter jwtAccessTokenConverter, DataSource dataSource) {
         this.authenticationManager = authenticationManager;
-        this.userService = userService;
+        this.customUserDetailsService = customUserDetailsService;
         this.jwtAccessTokenConverter = jwtAccessTokenConverter;
         this.dataSource = dataSource;
     }
@@ -36,7 +36,7 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .accessTokenConverter(jwtAccessTokenConverter)
-                .userDetailsService(userService)
+                .userDetailsService(customUserDetailsService)
                 .authenticationManager(authenticationManager);
     }
 

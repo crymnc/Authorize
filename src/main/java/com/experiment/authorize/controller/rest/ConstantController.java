@@ -4,7 +4,14 @@ import com.experiment.authorize.annotation.RestApiController;
 import com.experiment.authorize.domain.base.BaseConstantModel;
 import com.experiment.authorize.mapper.ConstantMapper;
 import com.experiment.authorize.service.ConstantService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +19,11 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestApiController
 @RequestMapping("/api/constants")
+@ApiResponses(value={
+        @ApiResponse(responseCode = "400", description = "Bad Request", content = {@Content(schema = @Schema(hidden = true))}),
+        @ApiResponse(responseCode = "401", description = "Unauthorized user", content = {@Content(schema = @Schema(hidden = true))}),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content(schema = @Schema(hidden = true))})
+})
 public class ConstantController {
 
     @Autowired
@@ -21,50 +33,65 @@ public class ConstantController {
     ConstantMapper constantMapper;
 
     @GetMapping("/{constant}")
-    public List findAllConstantsByName(@PathVariable(name = "constant") String constantName) {
-        return constantService.findAllByConstantName(constantName);
+    @Operation(summary = "Find All Constant By Name")
+    @ApiResponse(responseCode = "200", description = "Related Constants returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity<List> findAllConstantsByName(@PathVariable(name = "constant") String constantName) {
+        return ResponseEntity.status(HttpStatus.OK).body(constantService.findAllByConstantName(constantName));
     }
 
     @DeleteMapping("/{constant}/{id}")
-    public void deleteById(@PathVariable(name = "constant") String constantName,@PathVariable Long id){
+    @Operation(summary = "Delete Constant By Name And ID")
+    @ApiResponse(responseCode = "200", description = "Constant deleted", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity deleteById(@PathVariable(name = "constant") String constantName,@PathVariable Long id){
         constantService.deleteByConstantNameAndId(constantName,id);
+        return ResponseEntity.status(HttpStatus.OK).body("DELETED");
     }
 
     @PostMapping("/{constant}")
-    public String saveConstant(@PathVariable(name = "constant") String constantName, @RequestBody BaseConstantModel constantModel){
+    @Operation(summary = "Save New Constant By Name")
+    @ApiResponse(responseCode = "201", description = "Constant saved", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity saveConstant(@PathVariable(name = "constant") String constantName, @RequestBody BaseConstantModel constantModel){
         constantService.saveByConstantName(constantName,constantModel);
-        return "Success";
+        return ResponseEntity.status(HttpStatus.CREATED).body("CREATED");
     }
 
     @PutMapping("/{constant}")
-    public String updateConstant(@PathVariable(name = "constant") String constantName, @RequestBody BaseConstantModel constantModel){
+    @Operation(summary = "Update Constant By Name")
+    @ApiResponse(responseCode = "200", description = "Related Constants updated", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity updateConstant(@PathVariable(name = "constant") String constantName, @RequestBody BaseConstantModel constantModel){
         constantService.updateByConstantName(constantName,constantModel);
-        return "Success";
+        return ResponseEntity.status(HttpStatus.OK).body("UPDATED");
     }
 
     @PutMapping("/{subname}/{subid}/to/{mainname}/{mainid}")
-    public String addSubConstantToMainConstant(@PathVariable(name = "subname") String subConstantName,
+    @Operation(summary = "Create Relation Between Constants By Name And ID")
+    @ApiResponse(responseCode = "200", description = "Related Relation added", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity addSubConstantToMainConstant(@PathVariable(name = "subname") String subConstantName,
                                                @PathVariable(name = "subid") Long subConstantId,
                                                @PathVariable(name = "mainname") String mainConstantName,
                                                @PathVariable(name = "mainid") Long mainConstantId){
         constantService.addSubConstantToMain(mainConstantName,mainConstantId,subConstantName,subConstantId);
-        return "Success";
+        return ResponseEntity.status(HttpStatus.OK).body("CREATED");
     }
 
     @DeleteMapping("/{subname}/{subid}/from/{mainname}/{mainid}")
-    public String removeSubConstantFromMainConstant(@PathVariable(name = "subname") String subConstantName,
+    @Operation(summary = "Remove Relation Between Constants By Name And ID")
+    @ApiResponse(responseCode = "200", description = "Related Relation removed", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity removeSubConstantFromMainConstant(@PathVariable(name = "subname") String subConstantName,
                                           @PathVariable(name = "subid") Long subConstantId,
                                           @PathVariable(name = "mainname") String mainConstantName,
                                           @PathVariable(name = "mainid") Long mainConstantId){
         constantService.removeSubConstantFromMain(mainConstantName,mainConstantId,subConstantName,subConstantId);
-        return "Success";
+        return ResponseEntity.status(HttpStatus.OK).body("DELETED");
     }
 
     @GetMapping("{mainname}/{mainid}/{subname}")
-    public List getSubConstants(@PathVariable(name = "subname") String subConstantName,
+    @Operation(summary = "Get All Related Constants By Name And ID")
+    @ApiResponse(responseCode = "200", description = "Related Constants returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity<List> getSubConstants(@PathVariable(name = "subname") String subConstantName,
                                @PathVariable(name = "mainname") String mainConstantName,
                                @PathVariable(name = "mainid") Long mainConstantId) {
-        return constantService.getAllSubConstantName(mainConstantName,mainConstantId,subConstantName);
+        return ResponseEntity.status(HttpStatus.OK).body(constantService.getAllSubConstantName(mainConstantName,mainConstantId,subConstantName));
     }
 
 }

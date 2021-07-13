@@ -31,7 +31,7 @@ public abstract class BaseEntityAudit extends BaseEntity{
 
     @PrePersist
     private void setCreationParameters() {
-        Long userId = OAuthUtils.getUserIdFromAuthentication();
+        Long userId = OAuthUtils.getAuthenticatedUserId();
         if(userId == null){
             this.createdBy = -1L;
             this.updatedBy = -1L;

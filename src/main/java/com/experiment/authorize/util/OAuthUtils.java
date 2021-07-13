@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 
 public class OAuthUtils {
 
-    public static Long getUserIdFromAuthentication() {
+    public static Long getAuthenticatedUserId() {
         Object authenticationDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (authenticationDetails instanceof OAuth2AuthenticationDetails) {
             OAuth2AuthenticationDetails oAuth2AuthenticationDetails = (OAuth2AuthenticationDetails) authenticationDetails;
