@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestApiController
 @RequestMapping("/api/constants")
+@Tag(name = "Constant Controller")
 @ApiResponses(value={
         @ApiResponse(responseCode = "400", description = "Bad Request", content = {@Content(schema = @Schema(hidden = true))}),
         @ApiResponse(responseCode = "401", description = "Unauthorized user", content = {@Content(schema = @Schema(hidden = true))}),
