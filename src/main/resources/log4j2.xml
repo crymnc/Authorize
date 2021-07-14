@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="ALL">
     <Appenders>
-        <Kafka name="Kafka" topic="crymnc-test" enable="true">
-            <PatternLayout pattern="%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{gray}  %highlight{%-5level } --- [%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg"/>
+        <Kafka name="Kafka" topic="authorize-app" enable="true">
+            <PatternLayout pattern="%-5level --- {%t} %C : %msg"/>
             <Property name="bootstrap.servers">localhost:29092</Property>
         </Kafka>
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
