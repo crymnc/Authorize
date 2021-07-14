@@ -80,7 +80,6 @@ public class UserController {
     @Operation(summary = "Get All Registered User")
     @ApiResponse(responseCode = "200", description = "Registered Users returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))})
     public ResponseEntity<List<User>> getUsers() {
-        logger.info("Get Users run");
         return ResponseEntity.status(HttpStatus.OK).body(userMapper.toDomainList(userService.findAllUsers()));
     }
 }

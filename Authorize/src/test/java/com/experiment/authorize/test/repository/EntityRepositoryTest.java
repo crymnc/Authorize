@@ -8,20 +8,18 @@ import com.experiment.authorize.repository.base.EntityRepository;
 import com.experiment.authorize.test.utility.factory.RoleEntityMother;
 import com.experiment.authorize.test.utility.factory.UserComponentContentEntityMother;
 import com.experiment.authorize.test.utility.factory.UserComponentEntityMother;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
 
 import javax.validation.ConstraintViolationException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 public class EntityRepositoryTest {
 
