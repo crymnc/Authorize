@@ -86,6 +86,22 @@ services:
       - elk
     depends_on:
       - elasticsearch
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch:9200
+      - ES_USERNAME=elastic
+      - ES_PASSWORD=authorize
+    ports:
+      - 9411:9411
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+
       
 networks:
   elk:

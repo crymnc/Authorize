@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="ALL">
+<Configuration status="INFO">
     <Appenders>
         <Kafka name="Kafka" topic="authorize-app" enable="true">
             <PatternLayout pattern="%-5level --- {%t} %C : %msg"/>
@@ -26,14 +26,14 @@
 
     </Appenders>
     <Loggers>
-        <AsyncLogger name="com.experiment.authorize" level="info"
+        <AsyncLogger name="com.experiment.authorize" level="INFO"
                      additivity="false">
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="FileAppender"/>
             <AppenderRef ref="Kafka"/>
         </AsyncLogger>
-        <Logger name="org.apache.kafka" level="WARN" />
-        <Root level="info">
+        <Logger name="org.apache.kafka" level="INFO" />
+        <Root level="INFO">
             <AppenderRef ref="Kafka"/>
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="FileAppender"/>
