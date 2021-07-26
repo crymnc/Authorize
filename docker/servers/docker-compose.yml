@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  namingserver:
+    container_name: namingserver
+    image: crymnc/naming-server:latest
+    ports:
+      - 8761:8761
+  
+  configserver:
+    container_name: configserver
+    image: crymnc/config-server:latest
+    ports:
+      - 8888:8888
