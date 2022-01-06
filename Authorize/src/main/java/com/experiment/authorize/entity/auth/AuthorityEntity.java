@@ -10,17 +10,17 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="authority")
+@Entity(name = "authority")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorityEntity extends BaseConstantEntity{
+public class AuthorityEntity extends BaseConstantEntity {
 
     @OneToMany(
             mappedBy = "authority",
             orphanRemoval = true,
-            cascade=CascadeType.REMOVE,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER
     )
     private Set<AuthorityOptionEntity> authorityOptions;
@@ -28,9 +28,11 @@ public class AuthorityEntity extends BaseConstantEntity{
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private Set<AuthorityGroupEntity> authorityGroups = new HashSet<>();
 
-    public void addAuthorityGroup(AuthorityGroupEntity authorityGroupEntity){
+    public void addAuthorityGroup(AuthorityGroupEntity authorityGroupEntity) {
         this.authorityGroups.add(authorityGroupEntity);
-    }   public Set<AuthorityOptionEntity> getAuthorityOptions() {
+    }
+
+    public Set<AuthorityOptionEntity> getAuthorityOptions() {
         return authorityOptions;
     }
 

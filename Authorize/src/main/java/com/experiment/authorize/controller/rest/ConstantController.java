@@ -87,13 +87,20 @@ public class ConstantController {
         return ResponseEntity.status(HttpStatus.OK).body("DELETED");
     }
 
-    @GetMapping("{mainname}/{mainid}/{subname}")
+    @GetMapping("/{mainname}/{mainid}/{subname}")
     @Operation(summary = "Get All Related Constants By Name And ID")
     @ApiResponse(responseCode = "200", description = "Related Constants returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
     public ResponseEntity<List> getSubConstants(@PathVariable(name = "subname") String subConstantName,
                                @PathVariable(name = "mainname") String mainConstantName,
                                @PathVariable(name = "mainid") Long mainConstantId) {
-        return ResponseEntity.status(HttpStatus.OK).body(constantService.getAllSubConstantName(mainConstantName,mainConstantId,subConstantName));
+        return ResponseEntity.status(HttpStatus.OK).body(constantService.getSubConstants(mainConstantName,mainConstantId,subConstantName));
+    }
+
+    @GetMapping("/sub-of/{mainname}")
+    @Operation(summary = "Get All Related Constants Names By Name And ID")
+    @ApiResponse(responseCode = "200", description = "Related Constants names returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BaseConstantModel.class))})
+    public ResponseEntity<List> getSubConstantsName(@PathVariable(name = "mainname") String mainConstantName) {
+        return ResponseEntity.status(HttpStatus.OK).body(constantService.getAllSubConstantName(mainConstantName));
     }
 
 }

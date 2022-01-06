@@ -2,6 +2,7 @@ package com.experiment.authorize.controller.rest;
 
 import com.experiment.authorize.annotation.RestApiController;
 import com.experiment.authorize.domain.User;
+import com.experiment.authorize.exception.BusinessExceptions;
 import com.experiment.authorize.mapper.UserMapper;
 import com.experiment.authorize.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*" , methods = {RequestMethod.POST,RequestMethod.GET}, maxAge = 3600)
 @RestApiController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 @Tag(name = "User Controller")
 @ApiResponses(value={
         @ApiResponse(responseCode = "400", description = "Bad Request", content = {@Content(schema = @Schema(hidden = true))}),
@@ -81,5 +82,19 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Registered Users returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))})
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userMapper.toDomainList(userService.findAllUsers()));
+    }
+
+    @GetMapping("/username/{username}")
+    @Operation(summary = "Get User With Username")
+    @ApiResponse(responseCode = "200", description = "Selected User returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))})
+    public ResponseEntity<User> getUserWithUsername(@PathVariable(name="username") String username) {
+        return ResponseEntity.status(HttpStatus.OK).body(userMapper.toDomain(userService.findUserByUsername(username).orElseThrow(() -> BusinessExceptions.USER_NOT_FOUND)));
+    }
+
+    @GetMapping("/user-id/{user-id}")
+    @Operation(summary = "Get User With Username")
+    @ApiResponse(responseCode = "200", description = "Selected User returned", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = User.class))})
+    public ResponseEntity<User> getUserWithID(@PathVariable(name="user-id") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(userMapper.toDomain(userService.findUserById(userId).orElseThrow(() -> BusinessExceptions.USER_NOT_FOUND)));
     }
 }

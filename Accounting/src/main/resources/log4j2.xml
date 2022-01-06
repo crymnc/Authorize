@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Kafka name="Kafka" topic="accounting-app" enable="true">
+            <PatternLayout pattern="%-5level --- {%t} %C : %msg"/>
+            <Property name="bootstrap.servers">localhost:29092</Property>
+        </Kafka>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{gray}  %highlight{%-5level } --- [%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n"/>
+        </Console>
+        <RollingFile
+                name="FileAppender"
+                fileName="logs/application.log"
+                filePattern="logs/application.%d{dd-MMM}.log.gz"
+                ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="com.experiment.accounting" level="INFO"
+                     additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppender"/>
+            <AppenderRef ref="Kafka"/>
+        </AsyncLogger>
+        <Logger name="org.apache.kafka" level="INFO" />
+        <Root level="INFO">
+            <AppenderRef ref="Kafka"/>
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -10,6 +10,7 @@ public abstract class BaseModel {
     private Long id;
     @JsonIgnore
     private Long createdBy,updatedBy;
+    private Date discontinueDate;
     @JsonIgnore
-    private Date discontinueDate,createdAt,updatedAt;
+    private Date createdAt,updatedAt;
 }
