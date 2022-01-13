@@ -2,6 +2,7 @@ package com.experiment.inventory.entity
 
 import com.experiment.inventory.entity.base.BaseAuditEntity
 import javax.persistence.*
+import kotlin.jvm.Transient
 
 @Entity(name="inventory")
 class InventoryEntity:BaseAuditEntity() {
@@ -16,4 +17,9 @@ class InventoryEntity:BaseAuditEntity() {
     @JoinTable(name = "inventory_product", joinColumns = [JoinColumn(name = "inventory_id", referencedColumnName = "id")], inverseJoinColumns = [JoinColumn(name = "product_id", referencedColumnName = "id")])
     var productEntities: MutableList<ProductEntity>? = null
 
+    fun addProduct(product:ProductEntity){
+        if(productEntities == null)
+            productEntities = ArrayList()
+        productEntities!!.add(product)
+    }
 }

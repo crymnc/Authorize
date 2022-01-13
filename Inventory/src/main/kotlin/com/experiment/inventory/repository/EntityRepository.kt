@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
 
 @Repository
-interface EntityRepository<T: BaseEntity>: JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
+interface EntityRepository<T>: JpaRepository<T, Long>, JpaSpecificationExecutor<T> where T: BaseEntity {
 }

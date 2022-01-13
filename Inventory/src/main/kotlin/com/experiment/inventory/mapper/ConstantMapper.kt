@@ -2,12 +2,14 @@ package com.experiment.inventory.mapper
 
 import com.experiment.inventory.domain.base.BaseConstantModel
 import com.experiment.inventory.entity.base.BaseConstantEntity
+import org.springframework.stereotype.Component
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 
+@Component
 class ConstantMapper {
 
-    fun <X : BaseConstantModel?, Y : BaseConstantEntity?> toModel(constantEntity: Y): X? {
-        if( constantEntity == null)
-            return null
+    fun < Y> toModel(constantEntity: Y): BaseConstantModel where Y:BaseConstantEntity{
         val model = BaseConstantModel()
         model.id = constantEntity.id
         model.dsc = constantEntity.dsc
@@ -18,13 +20,11 @@ class ConstantMapper {
         model.updatedAt = constantEntity.updatedAt
         model.updatedBy = constantEntity.updatedBy
 
-        return model as X
+        return model
     }
 
-    fun <X : BaseConstantEntity?, Y : BaseConstantModel?> toEntity(constantModel: Y, clazz: Class<X>): X? {
-        val entity: X = clazz.getDeclaredConstructor().newInstance()
-        if(constantModel == null || entity == null)
-            return null
+    fun <X : BaseConstantEntity, Y : BaseConstantModel> toEntity(constantModel: Y, clazz: KClass<X>): X {
+        val entity: X = clazz.createInstance()
 
         entity.id = constantModel.id
         entity.name = constantModel.name

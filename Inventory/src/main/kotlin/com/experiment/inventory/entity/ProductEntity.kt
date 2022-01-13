@@ -16,10 +16,15 @@ class ProductEntity:BaseAuditEntity() {
     @Column(name = "description")
     var description:String? = null
 
-    @Column(name = "product_code")
+    @Column(name = "product_code", unique = true)
     var productCode:String? = null
 
     @OneToMany(mappedBy = "product", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var productPriceHistory: MutableList<ProductPriceHistoryEntity>? = null
 
+    fun addProductPrice(productPriceHistoryEntity:ProductPriceHistoryEntity){
+        if(productPriceHistory == null)
+            productPriceHistory = ArrayList()
+        productPriceHistory!!.add(productPriceHistoryEntity)
+    }
 }

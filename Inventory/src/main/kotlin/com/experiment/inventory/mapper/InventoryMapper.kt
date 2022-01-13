@@ -32,4 +32,16 @@ class InventoryMapper {
         inventory.updatedBy = inventoryEntity.updatedBy
         return inventory;
     }
+
+    fun updateEntity(newInventory: Inventory, oldInventoryEntity: InventoryEntity){
+        oldInventoryEntity.name = newInventory.name
+        oldInventoryEntity.description = newInventory.description
+        oldInventoryEntity.discontinueDate = newInventory.discontinueDate
+    }
+
+    fun toModelList(inventoryEntities: List<InventoryEntity>?): List<Inventory?> {
+        if(inventoryEntities == null)
+            return ArrayList()
+        return inventoryEntities.map{inventoryEntity -> toModel(inventoryEntity)}.toList()
+    }
 }

@@ -15,4 +15,5 @@ public interface UserRepository extends EntityRepository<UserEntity> {
     @Transactional
     void deleteByUsername(String username);
 
+
 }
