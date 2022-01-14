@@ -1,0 +1,1 @@
+![](https://github.com/crymnc/Authorize/GeneralSystem.jpg)
