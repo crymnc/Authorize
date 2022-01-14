@@ -1,1 +1,1 @@
-![](https://github.com/crymnc/Authorize/GeneralSystem.jpg)
+![](https://github.com/crymnc/Authorize/blob/master/GeneralSystem.jpg)
